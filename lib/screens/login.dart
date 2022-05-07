@@ -14,16 +14,17 @@ class _LoginpageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-        child: Column(
-          children: [
-            Image.asset(
-              'images/logoingenieria.png',
-              height: 100,
-            )
-          ],
-        ),
-      )),
+        body: Center(
+          child: Column(
+            children: [
+              Image.asset(
+                'images/logoingenieria.png',
+                height: 100,
+              )
+            ],
+          ),
+        )
+      ),
     );
   }
 }
