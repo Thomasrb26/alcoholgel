@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class HomeAlertasScreen extends StatelessWidget {
-   
-  const HomeAlertasScreen({Key? key}) : super(key: key);
-  
+  // HomeAlertasScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home Alertas'),
+        elevation: 0,
+      ),
       body: Center(
-         child: Text('HomeAlertasScreen'),
+        child: Text('HomeAlertasScreen'),
       ),
     );
   }
