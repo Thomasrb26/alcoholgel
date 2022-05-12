@@ -13,13 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: MisAlertasScreen.id,
+      initialRoute: LoginPage.id,
       routes: {
-        MisAlertasScreen.id: (context) => MisAlertasScreen(),
+        LoginPage.id: (context) => const LoginPage(),
+        'home':(context) => const MisAlertasScreen()
       },
     );
   }

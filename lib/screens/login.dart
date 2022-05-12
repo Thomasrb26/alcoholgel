@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/usuario/HomeAlertasScreen.dart';
+import 'package:flutter_application_1/screens/usuario/MisAlertasScreen.dart';
 
 class LoginPage extends StatefulWidget {
   static String id = 'login_page';
+
+  const LoginPage({Key? key}) : super(key: key);
 
   //LoginPage({Key? key}) : super(key: key);
 
@@ -69,6 +73,10 @@ Widget _botonlogin() {
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 20,
-        onPressed: () {});
+        onPressed: () {
+          final route = MaterialPageRoute(
+              builder: (context) => const MisAlertasScreen());
+          Navigator.push(context, route);
+        });
   });
 }
