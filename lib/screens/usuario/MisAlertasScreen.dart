@@ -20,7 +20,7 @@ class MisAlertasScreen extends StatelessWidget {
       title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Mis alertas'),
+          title: const Text('Mis alertas'),
           backgroundColor: Colors.red[900],
           elevation: 0,
         ),

@@ -74,9 +74,10 @@ Widget _botonlogin() {
         ),
         elevation: 20,
         onPressed: () {
-          final route = MaterialPageRoute(
-              builder: (context) => const MisAlertasScreen());
-          Navigator.push(context, route);
+          // final route = MaterialPageRoute(
+          //     builder: (context) => const MisAlertasScreen());
+          // Navigator.push(context, route);
+          Navigator.pushNamed(context, 'home');
         });
   });
 }
