@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class MisAlertasScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    String _barcode = '';
     final alertaService = Provider.of<AlertaService>(context);
 
     return MaterialApp(
@@ -33,11 +35,27 @@ class MisAlertasScreen extends StatelessWidget {
           elevation: 0,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'scanqr');
-          },
-          child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+          FloatingActionButton(
+            heroTag: 'btn1',
+            onPressed: () {
+              QrScan.scan(_barcode);
+              // Navigator.pushNamed(context, 'scanqr');
+            },
+            child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+          ),
+          FloatingActionButton(
+            heroTag: 'btn2',
+            onPressed: () {
+              
+              Navigator.pushNamed(context, 'alertaInfo');
+            },
+            child: const Icon(Icons.insert_drive_file_rounded,size:35,),
+          ),
+          
+          ] 
         ),
         
         body: ListView.separated(
