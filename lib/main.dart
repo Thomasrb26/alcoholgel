@@ -31,12 +31,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: QrScan.id,
+      initialRoute: 'login',
       routes: {
-        LoginPage.id: (context) => const LoginPage(),
+        'login': (context) => const LoginPage(),
         'home':(context) => const MisAlertasScreen(),
-        'scanqr':(context) => const MisAlertasScreen(),
-        // 'home':(context) => const AlertaInfoScreen(),
+        // 'scanqr':(context) => const QrScan(),
         'alertaInfo': (context) => const AlertaInfoScreen()
       },
     );
