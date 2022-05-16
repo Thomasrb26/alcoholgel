@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
+import 'package:flutter_application_1/utils/qrscan.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
