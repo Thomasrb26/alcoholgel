@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../services/services.dart';
 
 class MisAlertasScreen extends StatelessWidget {
   static String id = 'idMisAlertas';
@@ -15,6 +18,9 @@ class MisAlertasScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final alertaService = Provider.of<AlertaService>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
@@ -37,12 +43,3 @@ class MisAlertasScreen extends StatelessWidget {
     );
   }
 }
-
-
-/* children: const [
-          ListTile(
-            leading: Icon(Icons.arrow_circle_right_sharp),
-            title: Text("prueba vista usuario"),
-          )
-        ]
-*/

@@ -1,6 +1,10 @@
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/usuario/info_alerta/InputComentario.dart';
-import 'package:flutter_application_1/screens/usuario/info_alerta/SelectTipoAlerta.dart';
+import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
+import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
+import 'package:flutter_application_1/utils/fetch.dart';
 
 class AlertaInfoScreen extends StatelessWidget {
   
@@ -14,7 +18,22 @@ class AlertaInfoScreen extends StatelessWidget {
       'comentario':'',
       'tipo':'',
     };
-
+    void enviarAlertaDb(){
+      Fetch.httpPost({
+          'activa':true,
+          'creadoPor':'2',
+          'edificio':'1',
+          'encargado':'1',
+          'estado':'pendiente',
+          'fechaCreacion': '2020',
+          'sala':'lab3'
+      }, '/alertas.json');
+    //   final response = Fetch.httpGet('alertas.json');
+    //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    //     extractedData.forEach( (id, data) {
+    //   print(data);
+    //  });
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -89,7 +108,7 @@ class AlertaInfoScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 40,),
                   ElevatedButton(
-                    onPressed:(){},
+                    onPressed:enviarAlertaDb,
                     child: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       child: Text(

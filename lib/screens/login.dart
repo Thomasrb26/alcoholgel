@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/usuario/HomeAlertasScreen.dart';
-import 'package:flutter_application_1/screens/usuario/MisAlertasScreen.dart';
 
 class LoginPage extends StatefulWidget {
   static String id = 'login_page';
