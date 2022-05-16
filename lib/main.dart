@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login.dart';
-import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
 import 'package:flutter_application_1/screens/usuario/usuario.dart';
 import 'package:flutter_application_1/services/services.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
@@ -35,7 +34,6 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (context) => const LoginPage(),
         'home':(context) => const MisAlertasScreen(),
-        // 'scanqr':(context) => const QrScan(),
         'alertaInfo': (context) => const AlertaInfoScreen()
       },
     );
