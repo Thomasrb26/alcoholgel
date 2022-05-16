@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.id: (context) => const LoginPage(),
         'home':(context) => const MisAlertasScreen(),
+        'scanqr':(context) => const MisAlertasScreen(),
         // 'home':(context) => const AlertaInfoScreen(),
         'alertaInfo':(context) => const AlertaInfoScreen()
       },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/services.dart';
@@ -24,12 +25,21 @@ class MisAlertasScreen extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
+      theme: AppTheme.lightTheme,
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Mis alertas'),
           backgroundColor: Colors.red[900],
           elevation: 0,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'scanqr');
+          },
+          child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+        ),
+        
         body: ListView.separated(
           itemCount: historial.length,
           itemBuilder: (context, index) => ListTile(
@@ -38,6 +48,7 @@ class MisAlertasScreen extends StatelessWidget {
             onTap: () {},
           ),
           separatorBuilder: (_, __) => const Divider(),
+          
         ),
       ),
     );

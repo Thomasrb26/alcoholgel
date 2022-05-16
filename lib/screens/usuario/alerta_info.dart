@@ -40,84 +40,86 @@ class AlertaInfoScreen extends StatelessWidget {
         title: const Text('Alcohol Gel App'),
       ),
       body: Center(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 40,vertical: 150),    
-          child: Card(
-            elevation: 15,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-            child: Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Column(
-                children: [
-                  const ListTile(
-                    leading: Icon(
-                      Icons.warning_rounded,
-                      color: Colors.amber,
-                      size: 40,
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 40,vertical: 150),    
+            child: Card(
+              elevation: 15,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+              child: Padding(
+                padding: const EdgeInsets.all(22.0),
+                child: Column(
+                  children: [
+                    const ListTile(
+                      leading: Icon(
+                        Icons.warning_rounded,
+                        color: Colors.amber,
+                        size: 40,
+                      ),
+                      title: Text(
+                        'ALERTA DISPENSADOR',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17
+                        ),
+                      ),
                     ),
-                    title: Text(
-                      'ALERTA DISPENSADOR',
+                    const Divider(),
+                    const ListTile(
+                      leading: Text('Edificio', 
+                      style: TextStyle(fontSize: 17),
+        
+                      ),
+                      trailing: Text('Edificio X',
+                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
+                    ),
+                    const Divider(),
+                    const ListTile(
+                      leading: Text('Sala', 
+                      style: TextStyle(fontSize: 17),
+                      ),
+                      trailing: Text('Sala 1',
+                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 30,),
+                    const Text('Selecionar tipo de alerta',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17
+                        fontSize: 16, 
+                        color: Colors.grey
                       ),
                     ),
-                  ),
-                  const Divider(),
-                  const ListTile(
-                    leading: Text('Edificio', 
-                    style: TextStyle(fontSize: 17),
-
-                    ),
-                    trailing: Text('Edificio X',
-                    style: TextStyle(fontSize: 17, color: Colors.grey),
-                    ),
-                  ),
-                  const Divider(),
-                  const ListTile(
-                    leading: Text('Sala', 
-                    style: TextStyle(fontSize: 17),
-                    ),
-                    trailing: Text('Sala 1',
-                    style: TextStyle(fontSize: 17, color: Colors.grey),
-                    ),
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 30,),
-                  const Text('Selecionar tipo de alerta',
-                    style: TextStyle(
-                      fontSize: 16, 
-                      color: Colors.grey
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  const SelectTipoAlerta(),
-                  const SizedBox(height: 10,),
-                  const Text('Comentario',
-                    style: TextStyle(
-                      fontSize: 16, 
-                      color: Colors.grey
-                    ),
-                  ),
-                  const SizedBox(height: 20,),
-                  InputComentario(
-                    // labelText: 'Comentario',
-                    hintText: 'Escribe tu Comentario',
-                    formProperty: 'comentario', 
-                    formValues: formValues
-                  ),
-                  const SizedBox(height: 40,),
-                  ElevatedButton(
-                    onPressed:enviarAlertaDb,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      child: Text(
-                        'Enviar Alerta',
-                        style: TextStyle(fontSize: 20),
+                    const SizedBox(height: 10,),
+                    const SelectTipoAlerta(),
+                    const SizedBox(height: 10,),
+                    const Text('Comentario',
+                      style: TextStyle(
+                        fontSize: 16, 
+                        color: Colors.grey
                       ),
+                    ),
+                    const SizedBox(height: 20,),
+                    InputComentario(
+                      // labelText: 'Comentario',
+                      hintText: 'Escribe tu Comentario',
+                      formProperty: 'comentario', 
+                      formValues: formValues
+                    ),
+                    const SizedBox(height: 40,),
+                    ElevatedButton(
+                      onPressed:enviarAlertaDb,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        child: Text(
+                          'Enviar Alerta',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      )
                     )
-                  )
-                ]),
+                  ]),
+              ),
             ),
           ),
         ),
