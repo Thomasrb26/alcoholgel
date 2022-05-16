@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class MisAlertasScreen extends StatelessWidget {
   static String id = 'idMisAlertas';
@@ -37,6 +39,8 @@ class MisAlertasScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 
 /* children: const [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login.dart';
 import 'package:flutter_application_1/screens/usuario/HomeAlertasScreen.dart';
 import 'package:flutter_application_1/screens/usuario/MisAlertasScreen.dart';
+import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,15 +14,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: LoginPage.id,
+      initialRoute: QrScan.id,
       routes: {
-        LoginPage.id: (context) => const LoginPage(),
-        'home':(context) => const MisAlertasScreen()
+        QrScan.id: (context) => const QrScan(),
+        'home': (context) => const MisAlertasScreen()
       },
     );
   }
