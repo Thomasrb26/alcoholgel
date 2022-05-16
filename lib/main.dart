@@ -33,8 +33,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       initialRoute: QrScan.id,
       routes: {
-        QrScan.id: (context) => const QrScan(),
-        'home': (context) => const MisAlertasScreen(),
+        LoginPage.id: (context) => const LoginPage(),
+        'home':(context) => const MisAlertasScreen(),
+        'scanqr':(context) => const MisAlertasScreen(),
         // 'home':(context) => const AlertaInfoScreen(),
         'alertaInfo': (context) => const AlertaInfoScreen()
       },
