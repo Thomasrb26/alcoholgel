@@ -16,25 +16,30 @@ class _LoginpageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
           body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Image.asset(
-                'images/logoingenieria.png',
-                height: 100,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Image.asset(
+                    'images/logoutal.png',
+                    height: 140,
+                    alignment: Alignment.center,
+                  ),
+                ),
+                Flexible(
+                  child: Image.asset(
+                    'images/logoingenieria.png',
+                    height: 100,
+                  ),
+                ),
+                solicitarRut(),
+                const Spacer(),
+                _botonlogin(),
+              ],
             ),
-            const SizedBox(
-              height: 15.0,
-            ),
-            solicitarRut(),
-            const Spacer(),
-            _botonlogin(),
-          ],
-        ),
-      )),
+          )),
     );
   }
 
