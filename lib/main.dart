@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login.dart';
-import 'package:flutter_application_1/screens/usuario/HomeAlertasScreen.dart';
-import 'package:flutter_application_1/screens/usuario/MisAlertasScreen.dart';
+import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
+import 'package:flutter_application_1/screens/usuario/usuario.dart';
+import 'package:flutter_application_1/services/services.dart';
+import 'package:flutter_application_1/themes/app_theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AppState());
+}
+
+// Proveer un estado global a la App, permite acceder a cualquier a los providers en cualquier lado.
+class AppState extends StatelessWidget {
+  const AppState({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => AlertaService())],
+      child: const MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -13,15 +29,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      initialRoute: LoginPage.id,
+      theme: AppTheme.lightTheme,
+      initialRoute: 'login',
       routes: {
-        LoginPage.id: (context) => const LoginPage(),
-        'home':(context) => const MisAlertasScreen()
+        'login': (context) => const LoginPage(),
+        'home':(context) => const MisAlertasScreen(),
+        // 'scanqr':(context) => const QrScan(),
+        'alertaInfo': (context) => const AlertaInfoScreen()
       },
     );
   }

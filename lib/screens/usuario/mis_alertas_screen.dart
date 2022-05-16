@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
+import 'package:flutter_application_1/themes/app_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../services/services.dart';
 
 class MisAlertasScreen extends StatelessWidget {
   static String id = 'idMisAlertas';
@@ -17,15 +20,30 @@ class MisAlertasScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String _barcode = '';
+    final alertaService = Provider.of<AlertaService>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
+      theme: AppTheme.lightTheme,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Mis alertas'),
+          title: const Text('Mis alertas'),
           backgroundColor: Colors.red[900],
           elevation: 0,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+
+            QrScan.scan(_barcode);
+            // Navigator.pushNamed(context, 'scanqr');
+          },
+          child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+        ),
+        
         body: ListView.separated(
           itemCount: historial.length,
           itemBuilder: (context, index) => ListTile(
@@ -34,19 +52,9 @@ class MisAlertasScreen extends StatelessWidget {
             onTap: () {},
           ),
           separatorBuilder: (_, __) => const Divider(),
+          
         ),
       ),
     );
   }
 }
-
-
-
-
-/* children: const [
-          ListTile(
-            leading: Icon(Icons.arrow_circle_right_sharp),
-            title: Text("prueba vista usuario"),
-          )
-        ]
-*/
