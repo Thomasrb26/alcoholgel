@@ -35,13 +35,27 @@ class MisAlertasScreen extends StatelessWidget {
           elevation: 0,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-
-            QrScan.scan(_barcode);
-            // Navigator.pushNamed(context, 'scanqr');
-          },
-          child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+          FloatingActionButton(
+            heroTag: 'btn1',
+            onPressed: () {
+              QrScan.scan(_barcode);
+              // Navigator.pushNamed(context, 'scanqr');
+            },
+            child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+          ),
+          FloatingActionButton(
+            heroTag: 'btn2',
+            onPressed: () {
+              
+              Navigator.pushNamed(context, 'alertaInfo');
+            },
+            child: const Icon(Icons.insert_drive_file_rounded,size:35,),
+          ),
+          
+          ] 
         ),
         
         body: ListView.separated(
