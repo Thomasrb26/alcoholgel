@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login.dart';
+import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
 import 'package:flutter_application_1/screens/usuario/usuario.dart';
 import 'package:flutter_application_1/services/services.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
 import 'package:provider/provider.dart';
+
 void main() {
   runApp(const AppState());
 }
@@ -15,13 +17,12 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AlertaService())
-      ],
-      child: const MyApp() ,
+      providers: [ChangeNotifierProvider(create: (_) => AlertaService())],
+      child: const MyApp(),
     );
   }
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key); //constructor
 
@@ -30,12 +31,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: LoginPage.id,
+      initialRoute: QrScan.id,
       routes: {
-        LoginPage.id: (context) => const LoginPage(),
-        'home':(context) => const MisAlertasScreen(),
+        QrScan.id: (context) => const QrScan(),
+        'home': (context) => const MisAlertasScreen(),
         // 'home':(context) => const AlertaInfoScreen(),
-        'alertaInfo':(context) => const AlertaInfoScreen()
+        'alertaInfo': (context) => const AlertaInfoScreen()
       },
     );
   }
