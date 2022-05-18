@@ -17,10 +17,12 @@ class AlertaService extends ChangeNotifier {
 
 
   Future cargarAlertas() async {
+
     final url = Uri.https(_baseUrl, 'alertas.json');
     final resp = await http.get(url);
 
     final Map<String,dynamic> alertasMap = json.decode(resp.body);
+    // return alertasMap;
 
     print(alertasMap);
   }

@@ -23,7 +23,7 @@ class MisAlertasScreen extends StatelessWidget {
 
     String _barcode = '';
     final alertaService = Provider.of<AlertaService>(context);
-
+    // print(alertaService.alertas);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
@@ -42,7 +42,7 @@ class MisAlertasScreen extends StatelessWidget {
             heroTag: 'btn1',
             onPressed: () {
               QrScan.scan(_barcode);
-              // Navigator.pushNamed(context, 'scanqr');
+              Navigator.pushNamed(context, 'alertaInfo',arguments: _barcode);
             },
             child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
           ),
