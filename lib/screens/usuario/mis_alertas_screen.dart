@@ -29,7 +29,10 @@ class MisAlertasScreen extends StatelessWidget {
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
     if(alertaService.isLoading) return const LoadingScreen(header:'Mis Alertas');
-    
+    print(alertaService.alertas.length);
+    for (var item in alertaService.alertas) {
+      print(item.estado);
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
@@ -50,8 +53,8 @@ class MisAlertasScreen extends StatelessWidget {
           FloatingActionButton(
             heroTag: 'btn1',
             onPressed: () {
-              QrScan.scan(_barcode);
-              Navigator.pushNamed(context, 'alertaInfo',arguments: _barcode);
+              QrScan.scan(_barcode, context);
+              // Navigator.pushNamed(context, 'alertaInfo',arguments: _barcode);
             },
             child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
           ),
@@ -70,8 +73,14 @@ class MisAlertasScreen extends StatelessWidget {
 
         body: ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          itemCount: historial.length,
-          itemBuilder: (context,i) => const CardAlertaUsuario()
+          itemCount: alertaService.alertas.length,
+          itemBuilder: (context,i) =>  
+            CardAlertaUsuario(
+            edificio: alertaService.alertas[i].edificio, 
+            fecha: alertaService.alertas[i].fechaCreacion, 
+            estado: alertaService.alertas[i].estado, 
+            sala: alertaService.alertas[i].sala, 
+          )
         )
 
         // body: ListView.separated(

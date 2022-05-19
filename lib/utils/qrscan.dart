@@ -1,16 +1,19 @@
 // import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/models/screen_args.dart';
 
 class QrScan {
-  
-  static Future scan(String _barcode) async {
+  static dynamic jsonBarCode;
+  static Future scan(String _barcode, BuildContext context) async {
   // String _barcode = "";
     try {
       ScanResult barcode = await BarcodeScanner.scan();
       String qrResult = barcode.rawContent;
       _barcode = qrResult;
-      print("QR:" + _barcode);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         
@@ -24,6 +27,14 @@ class QrScan {
     } catch (e) {
       _barcode = 'Error desconocido : $e';
     }
+    if(_barcode.isNotEmpty){ 
+      jsonBarCode = jsonDecode(_barcode);
+      Navigator.pushNamed(context, 'alertaInfo', arguments: ScreenArguments(jsonBarCode['edificio'], jsonBarCode['sala']));
+      // Navigator.pushNamed(context, 'alertaInfo',);
+      // Navigator.pushNamed(context, 'alertaInfo', arguments: ScreenArguments(jsonBarCode.edificio, jsonBarCode.sala));
+    }
+    print("QR:" + _barcode);
+
   }
 }
 
