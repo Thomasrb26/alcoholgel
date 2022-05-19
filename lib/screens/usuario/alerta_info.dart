@@ -1,16 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
 import 'package:flutter_application_1/utils/fetch.dart';
-
+import 'package:flutter_application_1/utils/qrscan.dart';
 class AlertaInfoScreen extends StatelessWidget {
-  
-   
-  const AlertaInfoScreen({Key? key}) : super(key: key);
+
+
+  const AlertaInfoScreen({Key? key }) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
 
+    
+    // final args = ModalRoute.of(context)!.settings.arguments;
+    // print("args" + args.toString());
+    // String edificio = args!.edificio;
+    print(QrScan.jsonBarCode);
     final Map<String, String> formValues = {
       'comentario':'',
       'tipo':'',
@@ -25,6 +32,7 @@ class AlertaInfoScreen extends StatelessWidget {
           'fechaCreacion': '2020',
           'sala':'lab3'
       }, '/alertas.json');
+      Navigator.pushNamed(context, 'home');
     //   final response = Fetch.httpGet('alertas.json');
     //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
     //     extractedData.forEach( (id, data) {
@@ -62,22 +70,22 @@ class AlertaInfoScreen extends StatelessWidget {
                       ),
                     ),
                     const Divider(),
-                    const ListTile(
-                      leading: Text('Edificio', 
+                    ListTile(
+                      leading: const Text('Edificio', 
                       style: TextStyle(fontSize: 17),
         
                       ),
-                      trailing: Text('Edificio X',
-                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                      trailing: Text(QrScan.jsonBarCode['edificio'],
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
                     const Divider(),
-                    const ListTile(
-                      leading: Text('Sala', 
+                    ListTile(
+                      leading: const Text('Sala', 
                       style: TextStyle(fontSize: 17),
                       ),
-                      trailing: Text('Sala 1',
-                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                      trailing: Text(QrScan.jsonBarCode['sala'],
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
                     const Divider(),

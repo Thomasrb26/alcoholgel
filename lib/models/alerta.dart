@@ -22,6 +22,7 @@ class Alertas {
     String estado;
     String fechaCreacion;
     String sala;
+    String? id;
 
     factory Alertas.fromJson(Map<String, dynamic> json) => Alertas(
         activa: json["activa"],
