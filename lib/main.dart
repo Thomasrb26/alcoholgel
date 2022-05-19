@@ -5,7 +5,6 @@ import 'package:flutter_application_1/services/services.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
-import 'models/screen_args.dart';
 
 void main() {
   runApp(const AppState());
@@ -36,26 +35,9 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (context) => const LoginPage(),
         'home':(context) => const MisAlertasScreen(),
-        'alertaInfo': (context) => const AlertaInfoScreen(edificio: '', sala: '',)
+        'alertaInfo': (context) => const AlertaInfoScreen()
       },
-      // onGenerateRoute: (settings) {
-      // // Si haces push de la ruta PassArgumentsScreen
-      // if (settings.name == 'alertaInfo') {
-      //   // Convierte los argumentos al tipo correcto: ScreenArguments.
-      //   final ScreenArguments args = (ScreenArguments) settings.arguments;
-
-      //   // Entonces, extrae los datos requeridos de los argumentos
-      //   // y pasa los datos a la pantalla correcta.
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       return AlertaInfoScreen(
-      //         edificio: args.edificio,
-      //         sala: args.sala,
-      //       );
-      //     },
-      //   );
-      // }
-      // }
+      
       );
   }
 }

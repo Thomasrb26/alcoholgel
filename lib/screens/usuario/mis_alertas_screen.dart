@@ -29,10 +29,7 @@ class MisAlertasScreen extends StatelessWidget {
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
     if(alertaService.isLoading) return const LoadingScreen(header:'Mis Alertas');
-    print(alertaService.alertas.length);
-    for (var item in alertaService.alertas) {
-      print(item.estado);
-    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',

@@ -1,18 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/screen_args.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
 import 'package:flutter_application_1/utils/fetch.dart';
 import 'package:flutter_application_1/utils/qrscan.dart';
 class AlertaInfoScreen extends StatelessWidget {
-  
-  final String edificio;
-  final String sala;
 
 
-  const AlertaInfoScreen({Key? key, required this.edificio, required this.sala, }) : super(key: key);
+  const AlertaInfoScreen({Key? key }) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -36,6 +32,7 @@ class AlertaInfoScreen extends StatelessWidget {
           'fechaCreacion': '2020',
           'sala':'lab3'
       }, '/alertas.json');
+      Navigator.pushNamed(context, 'home');
     //   final response = Fetch.httpGet('alertas.json');
     //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
     //     extractedData.forEach( (id, data) {

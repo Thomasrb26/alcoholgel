@@ -4,10 +4,11 @@ import 'dart:convert';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/models/screen_args.dart';
 
 class QrScan {
+
   static dynamic jsonBarCode;
+
   static Future scan(String _barcode, BuildContext context) async {
   // String _barcode = "";
     try {
@@ -29,11 +30,11 @@ class QrScan {
     }
     if(_barcode.isNotEmpty){ 
       jsonBarCode = jsonDecode(_barcode);
-      Navigator.pushNamed(context, 'alertaInfo', arguments: ScreenArguments(jsonBarCode['edificio'], jsonBarCode['sala']));
+      Navigator.pushNamed(context, 'alertaInfo');
       // Navigator.pushNamed(context, 'alertaInfo',);
       // Navigator.pushNamed(context, 'alertaInfo', arguments: ScreenArguments(jsonBarCode.edificio, jsonBarCode.sala));
     }
-    print("QR:" + _barcode);
+    // print("QR:" + _barcode);
 
   }
 }
