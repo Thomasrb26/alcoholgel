@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/loading_screen.dart';
 import 'package:flutter_application_1/utils/qrscan.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
+import 'package:flutter_application_1/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/services.dart';
 
 class MisAlertasScreen extends StatelessWidget {
+
   static String id = 'idMisAlertas';
 
   final historial = const [
@@ -23,18 +26,24 @@ class MisAlertasScreen extends StatelessWidget {
 
     String _barcode = '';
     final alertaService = Provider.of<AlertaService>(context);
-    // print(alertaService.alertas);
+
+    // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
+    if(alertaService.isLoading) return const LoadingScreen(header:'Mis Alertas');
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       theme: AppTheme.lightTheme,
       home: Scaffold(
+
         appBar: AppBar(
           title: const Text('Mis alertas'),
           backgroundColor: Colors.red[900],
           elevation: 0,
         ),
+
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children:[
@@ -58,16 +67,23 @@ class MisAlertasScreen extends StatelessWidget {
           ] 
         ),
         
-        body: ListView.separated(
+
+        body: ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           itemCount: historial.length,
-          itemBuilder: (context, index) => ListTile(
-            title: Text(historial[index]),
-            trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
-            onTap: () {},
-          ),
-          separatorBuilder: (_, __) => const Divider(),
+          itemBuilder: (context,i) => const CardAlertaUsuario()
+        )
+
+        // body: ListView.separated(
+        //   itemCount: historial.length,
+        //   itemBuilder: (context, index) => ListTile(
+        //     title: Text(historial[index]),
+        //     trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
+        //     onTap: () {},
+        //   ),
+        //   separatorBuilder: (_, __) => const Divider(),
           
-        ),
+        // ),
       ),
     );
   }
