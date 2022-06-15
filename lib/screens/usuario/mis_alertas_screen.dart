@@ -58,7 +58,6 @@ class MisAlertasScreen extends StatelessWidget {
           FloatingActionButton(
             heroTag: 'btn2',
             onPressed: () {
-              
               Navigator.pushNamed(context, 'alertaInfo');
             },
             child: const Icon(Icons.insert_drive_file_rounded,size:35,),
@@ -67,7 +66,6 @@ class MisAlertasScreen extends StatelessWidget {
           ] 
         ),
         
-
         body: ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           itemCount: alertaService.alertas.length,
@@ -79,17 +77,6 @@ class MisAlertasScreen extends StatelessWidget {
             sala: alertaService.alertas[i].sala, 
           )
         )
-
-        // body: ListView.separated(
-        //   itemCount: historial.length,
-        //   itemBuilder: (context, index) => ListTile(
-        //     title: Text(historial[index]),
-        //     trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
-        //     onTap: () {},
-        //   ),
-        //   separatorBuilder: (_, __) => const Divider(),
-          
-        // ),
       ),
     );
   }

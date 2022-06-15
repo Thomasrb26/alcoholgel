@@ -10,11 +10,10 @@ class AlertaService extends ChangeNotifier {
   final List<Alertas> alertas = [];
 
   bool isLoading = true;
-
+  bool isSaving = false;
   AlertaService(){
     cargarAlertas();
   }
-
 
   Future cargarAlertas() async {
 
@@ -36,6 +35,48 @@ class AlertaService extends ChangeNotifier {
     notifyListeners();
 
     // print(alertas[0].id);
+  }
+  Future saveOrCreateAlerta(Alertas alerta) async {
+
+    // Avisar a cualquier componente que este utilizando isSaving que esta en true
+    isSaving = true;
+    notifyListeners();
+
+    if(alerta.id == null){
+      // es necsario crear
+      await crearAlerta(alerta);
+    }
+    else{
+      // ya existe, actualizar
+      await updateAlerta(alerta);
+    }
+
+    // Avisar a cualquier componente que este utilizando isSaving que esta en false
+    isSaving = false;
+    notifyListeners();
+  }
+  
+
+  // Metodo para crear una nueva alerta
+  Future crearAlerta(Alertas alerta) async {
+    final url = Uri.https(_baseUrl,'alertas.json');
+    print(alerta.toJson());
+    final resp = await http.post(url, body:json.encode(alerta.toJson()));
+    final decodedData = json.decode(resp.body);
+    alerta.id = decodedData['name'];
+    alertas.add(alerta);
+
+    return alerta.id!;
+  }
+  // Metodo para actualizar los datos de una alerta
+  Future updateAlerta(Alertas alerta) async {
+    final url = Uri.https(_baseUrl,'alertas/${alerta.id}.json');
+    final resp = await http.put(url, body:alerta.toJson());
+    final decodedData = json.decode(resp.body);
+    alerta.id = decodedData['name'];
+    alertas.add(alerta);
+
+    return alerta.id!;
   }
 
 }

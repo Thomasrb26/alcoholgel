@@ -1,11 +1,15 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/alerta.dart';
+import 'package:flutter_application_1/providers/alerta_form_provider.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
+import 'package:flutter_application_1/services/alerta_service.dart';
 import 'package:flutter_application_1/utils/fetch.dart';
 import 'package:flutter_application_1/utils/qrscan.dart';
+import 'package:provider/provider.dart';
 class AlertaInfoScreen extends StatelessWidget {
+
 
 
   const AlertaInfoScreen({Key? key }) : super(key: key);
@@ -13,33 +17,38 @@ class AlertaInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    
-    // final args = ModalRoute.of(context)!.settings.arguments;
-    // print("args" + args.toString());
-    // String edificio = args!.edificio;
-    print(QrScan.jsonBarCode);
-    final Map<String, String> formValues = {
-      'comentario':'',
-      'tipo':'',
-    };
-    void enviarAlertaDb(){
-      Fetch.httpPost({
-          'activa':true,
-          'creadoPor':'2',
-          'edificio':'1',
-          'encargado':'1',
-          'estado':'pendiente',
-          'fechaCreacion': '2020',
-          'sala':'lab3'
-      }, '/alertas.json');
-      Navigator.pushNamed(context, 'home');
-    //   final response = Fetch.httpGet('alertas.json');
-    //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    //     extractedData.forEach( (id, data) {
-    //   print(data);
-    //  });
-    }
+    final alertaService = Provider.of<AlertaService>(context);
+
+    return ChangeNotifierProvider(
+      create: (_) => AlertaFormProvider(Alertas(
+        activa: true, 
+        creadoPor: "user", 
+        edificio: QrScan.jsonBarCode['edificio'], 
+        // edificio: 'edificio ej', 
+        encargado: '', 
+        estado: "pendiente", 
+        fechaCreacion: DateTime.now().toString(), 
+        sala:  QrScan.jsonBarCode['sala'], 
+        // sala:  'Sala1', 
+        comentario: '', 
+        tipoAlerta: 'Falta Alcohol'
+      )),
+      child: _AlertaInfo(alertaService: alertaService)
+      );
+  }
+}
+
+class _AlertaInfo extends StatelessWidget {
+  const _AlertaInfo({
+    Key? key, required this.alertaService,
+  }) : super(key: key);
+  final AlertaService alertaService;
+  @override
+  Widget build(BuildContext context) {
+    final alertaForm = Provider.of<AlertaFormProvider>(context);
+    final alerta = alertaForm.alerta;
     return Scaffold(
+      key: alertaForm.formKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Alcohol Gel App'),
@@ -75,7 +84,7 @@ class AlertaInfoScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 17),
         
                       ),
-                      trailing: Text(QrScan.jsonBarCode['edificio'],
+                      trailing: Text(alerta.edificio,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
@@ -84,7 +93,7 @@ class AlertaInfoScreen extends StatelessWidget {
                       leading: const Text('Sala', 
                       style: TextStyle(fontSize: 17),
                       ),
-                      trailing: Text(QrScan.jsonBarCode['sala'],
+                      trailing: Text(alerta.sala,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
@@ -106,15 +115,19 @@ class AlertaInfoScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    InputComentario(
+                    const InputComentario(
                       // labelText: 'Comentario',
                       hintText: 'Escribe tu Comentario',
                       formProperty: 'comentario', 
-                      formValues: formValues
+                      // formValues: formValues
                     ),
                     const SizedBox(height: 40,),
                     ElevatedButton(
-                      onPressed:enviarAlertaDb,
+                      // onPressed:enviarAlertaDb,
+                      onPressed: () async {
+                        await alertaService.crearAlerta(alerta);
+                        Navigator.pushNamed(context, 'vista_alertas');
+                      } ,
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         child: Text(
