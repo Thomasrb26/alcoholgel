@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Pantalla de carga
 class LoadingScreen extends StatelessWidget {
 
   final String header;

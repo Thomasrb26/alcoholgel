@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
 
+///Widget que representa un elemento en la lista de alertas existentes del usuario.
+///Muestra informacion de la alerta, como el titulo, fecha, el estado actual y un par de iconos.
 class CardAlertaUsuario extends StatelessWidget {
 
   final String fecha;
@@ -15,8 +17,8 @@ class CardAlertaUsuario extends StatelessWidget {
     required this.edificio}
   ) : super(key: key);
 
+  // Metodo para definir el color de fondo del widget para mostrar el estado.
   Color switchColorEstado(){
-
     switch (estado) {
       case 'pendiente':
         return Colors.red;
@@ -28,49 +30,19 @@ class CardAlertaUsuario extends StatelessWidget {
         return Colors.grey;
     }
   }
-
-  Icon switchIconAlerta() {
-    switch (estado) {
-      case 'pendiente':
-        return const Icon(
-          Icons.timer,
-          size: 40,
-          color: Color.fromARGB(255, 235, 213, 11),
-        ) ;
-      case 'en camino':
-        return  const Icon(
-          Icons.directions_walk,
-          size: 40,
-          color: Colors.blueGrey,
-        ) ;
-      case 'completado':
-        return const Icon(
-          Icons.check,
-          size: 40,
-          color: Colors.green,
-        ) ;
-      default:
-        return const Icon(
-          Icons.timer_outlined,
-          size: 40,
-        ) ;
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: [
           ListTile(
-            // leading: switchIconAlerta(),
             leading: const Icon(
               Icons.qr_code,
               size: 40,
               color: AppTheme.primary,
             ) ,
-            title: Text('Dispensador '+edificio+sala),
+            title: Text('Dispensador '+edificio+' '+sala),
             subtitle: Text(fecha),
-            // ignore: prefer_const_literals_to_create_immutables
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

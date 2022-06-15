@@ -5,6 +5,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+///Libreria para el escaneo del QR. 
 class QrScan {
   static dynamic jsonBarCode;
 
@@ -30,11 +31,7 @@ class QrScan {
     if(_barcode.isNotEmpty){ 
       jsonBarCode = jsonDecode(_barcode);
       Navigator.pushNamed(context, 'alertaInfo');
-      // Navigator.pushNamed(context, 'alertaInfo',);
-      // Navigator.pushNamed(context, 'alertaInfo', arguments: ScreenArguments(jsonBarCode.edificio, jsonBarCode.sala));
     }
-    // print("QR:" + _barcode);
-
   }
 }
 
