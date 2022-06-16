@@ -1,6 +1,7 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

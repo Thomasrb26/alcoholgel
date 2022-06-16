@@ -54,18 +54,48 @@ class MisAlertasScreen extends StatelessWidget {
         ),
         
         //Lista de alertas para el usuario.
-        body: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          itemCount: alertaService.alertas.length,
-          itemBuilder: (context,i) =>  
-            CardAlertaUsuario(
-            edificio: alertaService.alertas[i].edificio, 
-            fecha: alertaService.alertas[i].fechaCreacion, 
-            estado: alertaService.alertas[i].estado, 
-            sala: alertaService.alertas[i].sala, 
-          )
-        )
+        body: ListAlertas(alertaService: alertaService)
       ),
     );
+  }
+}
+
+class ListAlertas extends StatelessWidget {
+  const ListAlertas({
+    Key? key,
+    required this.alertaService,
+  }) : super(key: key);
+
+  final AlertaService alertaService;
+
+  @override
+  Widget build(BuildContext context) {
+
+    print(alertaService.alertas);
+    if(alertaService.alertas.isNotEmpty){
+      return ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        itemCount: alertaService.alertas.length,
+        itemBuilder: (context,i) =>  
+          CardAlertaUsuario(
+          edificio: alertaService.alertas[i].edificio, 
+          fecha: alertaService.alertas[i].fechaCreacion, 
+          estado: alertaService.alertas[i].estado, 
+          sala: alertaService.alertas[i].sala, 
+        )
+      );
+    }
+    else{
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.question_mark_rounded, color: Colors.grey,),
+            const Text("No existen alertas", style: TextStyle(color: Colors.grey),),
+          ],
+        ),
+      );
+    }
+
   }
 }

@@ -28,13 +28,15 @@ class AlertaService extends ChangeNotifier {
     final url = Uri.https(_baseUrl, 'alertas.json');
     final resp = await http.get(url);
 
+    
     final Map<String,dynamic> alertasMap = json.decode(resp.body);
-
-    alertasMap.forEach((key, value) {
-      final tempAlerta = Alertas.fromJson(value);
-      tempAlerta.id = key;
-      alertas.add(tempAlerta);
-    });
+    if(alertasMap != null){
+      alertasMap.forEach((key, value) {
+        final tempAlerta = Alertas.fromJson(value);
+        tempAlerta.id = key;
+        alertas.add(tempAlerta);
+      });
+    }
     isLoading = false;
     notifyListeners();
 

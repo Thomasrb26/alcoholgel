@@ -19,24 +19,26 @@ class _LoginUsuario extends State<LoginUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: DisenologinUsuario(
-      child: SingleChildScrollView(
+      body: DisenologinUsuario(
         child: Column(
           children: [
-            const SizedBox(height: 500),
-            Cardcontainer(
-                child: Column(
-              children: [
-                ChangeNotifierProvider(
-                  create: (_) => LoginFormProvider(),
-                  child: _Loginform(),
-                )
-              ],
-            )),
+            const SizedBox(height: 50),
+            FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Cardcontainer(
+                  child: Column(
+                children: [
+                  ChangeNotifierProvider(
+                    create: (_) => LoginFormProvider(),
+                    child: _Loginform(),
+                  )
+                ],
+              )),
+            ),
           ],
         ),
-      ),
-    ));
+      )
+    );
   }
 }
 
@@ -61,7 +63,6 @@ class _Loginform extends StatelessWidget {
             validator: (value) {
               String pattern = r'([0-9]{10})';
               RegExp regExp = new RegExp(pattern);
-
               return regExp.hasMatch(value ?? '')
                   ? null
                   : 'Matricula no valida';
@@ -73,7 +74,7 @@ class _Loginform extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: const Color.fromARGB(255, 109, 109, 109),
+              color: Colors.red[900],
               child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   child: Text(

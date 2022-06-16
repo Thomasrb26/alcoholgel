@@ -11,34 +11,32 @@ class Disenologin extends StatelessWidget {
       color: const Color.fromARGB(255, 238, 238, 240),
       width: double.infinity,
       height: double.infinity,
-      child: Stack(
-        children: [
-          const Positioned(
-              child: Image(
-                image: AssetImage('images/logoutal.png'),
-                height: 200,
-              ),
-              top: 120,
-              left: 100),
-          const Positioned(
-              child: Image(
-                image: AssetImage('images/logoingenieria.png'),
-                height: 100,
-              ),
-              top: 350,
-              left: 50),
-          //_inglogo(),
-          Positioned(child: _botonlogin(), top: 480, left: 110),
-          Positioned(child: _botonlogin2(), top: 570, left: 114),
-          //_HeaderIcon(),
-          child,
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const[
+                Image(image: AssetImage('images/logoutal.png',), height: 70,),
+                Image(image: AssetImage('images/logoingenieria.png'),height: 70,),
+              ],
+            ),
+            const SizedBox(height: 30,),
+            const Text('Seleccione su perfil:', style: TextStyle(fontSize: 18  )),
+            const SizedBox(height: 20,),
+            _botonFuncionario(),
+            const SizedBox(height: 20),
+            _botonEstudiante()
+          ],
+        ),
       ),
     );
   }
 }
 
-Widget _botonlogin2() {
+Widget _botonEstudiante() {
   return StreamBuilder(builder: (BuildContext context, AsyncSnapshot snapshot) {
     return RaisedButton(
         child: Container(
@@ -54,15 +52,12 @@ Widget _botonlogin2() {
         ),
         elevation: 20,
         onPressed: () {
-          // final route = MaterialPageRoute(
-          //     builder: (context) => const MisAlertasScreen());
-          // Navigator.push(context, route);
           Navigator.pushNamed(context, 'loginUsuario');
         });
   });
 }
 
-Widget _botonlogin() {
+Widget _botonFuncionario() {
   return StreamBuilder(builder: (BuildContext context, AsyncSnapshot snapshot) {
     return RaisedButton(
         child: Container(
@@ -78,9 +73,6 @@ Widget _botonlogin() {
         ),
         elevation: 20,
         onPressed: () {
-          // final route = MaterialPageRoute(
-          //     builder: (context) => const MisAlertasScreen());
-          // Navigator.push(context, route);
           Navigator.pushNamed(context, 'loginFun');
         });
   });
