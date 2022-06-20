@@ -1,12 +1,13 @@
 // import 'package:flutter/material.dart';
 import 'dart:convert';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+///Libreria para el escaneo del QR. 
 class QrScan {
-
   static dynamic jsonBarCode;
 
   static Future scan(String _barcode, BuildContext context) async {
@@ -31,52 +32,7 @@ class QrScan {
     if(_barcode.isNotEmpty){ 
       jsonBarCode = jsonDecode(_barcode);
       Navigator.pushNamed(context, 'alertaInfo');
-      // Navigator.pushNamed(context, 'alertaInfo',);
-      // Navigator.pushNamed(context, 'alertaInfo', arguments: ScreenArguments(jsonBarCode.edificio, jsonBarCode.sala));
     }
-    // print("QR:" + _barcode);
-
   }
 }
-
-// class QrScanState extends State<QrScan> {
-//   String _barcode = "";
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text('Lector QR flutter'),
-//           backgroundColor: Colors.red,
-//         ),
-//         body: Container(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.end,
-//             crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: <Widget>[
-//               SizedBox(
-//                 height: 10,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10.0),
-//                 child: RaisedButton(
-//                   color: Colors.red,
-//                   textColor: Colors.black,
-//                   splashColor: Color.fromARGB(255, 180, 204, 216),
-//                   onPressed: scan,
-//                   child: const Text('Scanear el código QR.'),
-//                 ),
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
-//                 child: Text(
-//                   _barcode,
-//                   textAlign: TextAlign.center,
-//                   style: TextStyle(color: Colors.red),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ));
-//   }
-// }
 

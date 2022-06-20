@@ -1,45 +1,67 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/alerta.dart';
+import 'package:flutter_application_1/providers/alerta_form_provider.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
-import 'package:flutter_application_1/utils/fetch.dart';
+import 'package:flutter_application_1/services/alerta_service.dart';
 import 'package:flutter_application_1/utils/qrscan.dart';
-class AlertaInfoScreen extends StatelessWidget {
+import 'package:provider/provider.dart';
 
+/// Vista de informacion de una alerta luego de escanear el codigo QR del dispensador.
+/// En esta vista es posible elegir parametros para la alerta y luego enviarla hacia 
+/// la base de datos de Firebase.
+class AlertaInfoScreen extends StatelessWidget {
 
   const AlertaInfoScreen({Key? key }) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
 
-    
-    // final args = ModalRoute.of(context)!.settings.arguments;
-    // print("args" + args.toString());
-    // String edificio = args!.edificio;
-    print(QrScan.jsonBarCode);
-    final Map<String, String> formValues = {
-      'comentario':'',
-      'tipo':'',
-    };
-    void enviarAlertaDb(){
-      Fetch.httpPost({
-          'activa':true,
-          'creadoPor':'2',
-          'edificio':'1',
-          'encargado':'1',
-          'estado':'pendiente',
-          'fechaCreacion': '2020',
-          'sala':'lab3'
-      }, '/alertas.json');
-      Navigator.pushNamed(context, 'home');
-    //   final response = Fetch.httpGet('alertas.json');
-    //   final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    //     extractedData.forEach( (id, data) {
-    //   print(data);
-    //  });
+    final alertaService = Provider.of<AlertaService>(context);
+
+    String getDate() {
+      final now = DateTime.now();
+      return "${now.day}-${now.month}-${now.year}";
     }
+    // Creamos mediante el provider una instancia de alerta.
+    return ChangeNotifierProvider(
+      create: (_) => AlertaFormProvider(
+        // Creacion de una instancia de alerta.
+        Alertas(
+          activa: true, 
+          creadoPor: "user", 
+          edificio: QrScan.jsonBarCode['edificio'], 
+          encargado: '', 
+          estado: "pendiente", 
+          fechaCreacion:getDate(), 
+          sala:  QrScan.jsonBarCode['sala'], 
+          comentario: '', 
+          tipoAlerta: 'Falta Alcohol'
+        )
+      ),
+
+      // Luego de crear el provider con la alerta se la enviamos a la vista.
+      child: _AlertaInfo(alertaService: alertaService)
+    );
+  }
+}
+
+/// Cuerpo de la vista de alerta info
+class _AlertaInfo extends StatelessWidget {
+  const _AlertaInfo({
+    Key? key, required this.alertaService,
+  }) : super(key: key);
+
+  // Instancia del servicio de alertas para utilizar conexion con la api.
+  final AlertaService alertaService;
+
+  @override
+  Widget build(BuildContext context) {
+    final alertaForm = Provider.of<AlertaFormProvider>(context);
+    final alerta = alertaForm.alerta;
     return Scaffold(
+      key: alertaForm.formKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Alcohol Gel App'),
@@ -75,7 +97,7 @@ class AlertaInfoScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 17),
         
                       ),
-                      trailing: Text(QrScan.jsonBarCode['edificio'],
+                      trailing: Text(alerta.edificio,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
@@ -84,7 +106,7 @@ class AlertaInfoScreen extends StatelessWidget {
                       leading: const Text('Sala', 
                       style: TextStyle(fontSize: 17),
                       ),
-                      trailing: Text(QrScan.jsonBarCode['sala'],
+                      trailing: Text(alerta.sala,
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                       ),
                     ),
@@ -106,15 +128,19 @@ class AlertaInfoScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    InputComentario(
+                    const InputComentario(
                       // labelText: 'Comentario',
                       hintText: 'Escribe tu Comentario',
                       formProperty: 'comentario', 
-                      formValues: formValues
+                      // formValues: formValues
                     ),
                     const SizedBox(height: 40,),
                     ElevatedButton(
-                      onPressed:enviarAlertaDb,
+                      // onPressed:enviarAlertaDb,
+                      onPressed: () async {
+                        await alertaService.crearAlerta(alerta);
+                        Navigator.pushNamed(context, 'vista_alertas');
+                      } ,
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         child: Text(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+///Configuracion de los temas y estilos globales para la aplicacion.
 class AppTheme {
 
   static const Color primary = Color.fromARGB(255, 171, 9, 0);
 
+  // Tema claro, utilizado por defecto
   static final ThemeData lightTheme = ThemeData.light().copyWith(
       primaryColor: primary,
       appBarTheme: const AppBarTheme(
@@ -50,6 +52,8 @@ class AppTheme {
         )
       )
       );
+  
+  // Tema oscuro
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
     primaryColor: primary,
     appBarTheme: const AppBarTheme(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/loading_screen.dart';
+import 'package:flutter_application_1/screens/shared/loading_screen.dart';
 import 'package:flutter_application_1/utils/qrscan.dart';
 import 'package:flutter_application_1/themes/app_theme.dart';
 import 'package:flutter_application_1/widgets/widgets.dart';
@@ -7,24 +7,19 @@ import 'package:provider/provider.dart';
 
 import '../../services/services.dart';
 
+///Vista principal del usuario general. Se muestran las alertas existentes en base
+///de datos para el usuario. Contiene un boton flotante para escanear codigo QR
 class MisAlertasScreen extends StatelessWidget {
-
-  static String id = 'idMisAlertas';
-
-  final historial = const [
-    'notificacion Sala 2',
-    'notificacion Sala E-1',
-    'notificacion Sala S2',
-    'notificacion Sala 14',
-    'notificacion Sala 24'
-  ];
 
   const MisAlertasScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
+    // Variable para guardar la informacion del codigo QR.
     String _barcode = '';
+
+    // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
@@ -51,46 +46,56 @@ class MisAlertasScreen extends StatelessWidget {
             heroTag: 'btn1',
             onPressed: () {
               QrScan.scan(_barcode, context);
-              // Navigator.pushNamed(context, 'alertaInfo',arguments: _barcode);
+              // Navigator.pushNamed(context, 'alertaInfo');
             },
             child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
-          ),
-          FloatingActionButton(
-            heroTag: 'btn2',
-            onPressed: () {
-              
-              Navigator.pushNamed(context, 'alertaInfo');
-            },
-            child: const Icon(Icons.insert_drive_file_rounded,size:35,),
-          ),
-          
+          ), 
           ] 
         ),
         
-
-        body: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          itemCount: alertaService.alertas.length,
-          itemBuilder: (context,i) =>  
-            CardAlertaUsuario(
-            edificio: alertaService.alertas[i].edificio, 
-            fecha: alertaService.alertas[i].fechaCreacion, 
-            estado: alertaService.alertas[i].estado, 
-            sala: alertaService.alertas[i].sala, 
-          )
-        )
-
-        // body: ListView.separated(
-        //   itemCount: historial.length,
-        //   itemBuilder: (context, index) => ListTile(
-        //     title: Text(historial[index]),
-        //     trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
-        //     onTap: () {},
-        //   ),
-        //   separatorBuilder: (_, __) => const Divider(),
-          
-        // ),
+        //Lista de alertas para el usuario.
+        body: ListAlertas(alertaService: alertaService)
       ),
     );
+  }
+}
+
+class ListAlertas extends StatelessWidget {
+  const ListAlertas({
+    Key? key,
+    required this.alertaService,
+  }) : super(key: key);
+
+  final AlertaService alertaService;
+
+  @override
+  Widget build(BuildContext context) {
+
+    print(alertaService.alertas);
+    if(alertaService.alertas.isNotEmpty){
+      return ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        itemCount: alertaService.alertas.length,
+        itemBuilder: (context,i) =>  
+          CardAlertaUsuario(
+          edificio: alertaService.alertas[i].edificio, 
+          fecha: alertaService.alertas[i].fechaCreacion, 
+          estado: alertaService.alertas[i].estado, 
+          sala: alertaService.alertas[i].sala, 
+        )
+      );
+    }
+    else{
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.question_mark_rounded, color: Colors.grey,),
+            const Text("No existen alertas", style: TextStyle(color: Colors.grey),),
+          ],
+        ),
+      );
+    }
+
   }
 }

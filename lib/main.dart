@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/login.dart';
-import 'package:flutter_application_1/screens/usuario/usuario.dart';
-import 'package:flutter_application_1/services/services.dart';
-import 'package:flutter_application_1/themes/app_theme.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_application_1/import.dart';
 
 
@@ -30,18 +25,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      // Quitar banner de modo debug en previsualizacion de android.
       debugShowCheckedModeBanner: false,
+
+      // Definir el tema global de la aplicacion
       theme: AppTheme.lightTheme,
+
+      // Definir la ruta inicial por defecto
       initialRoute: 'login',
+
+      // Definir las demas rutas con sus respectivos componentes
       routes: {
         'login': (context) => const LoginPage(),
         'vista_alertas': (context) => const MisAlertasScreen(),
-        // 'scanqr':(context) => const QrScan(),
         'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
         'home':(context) => const MisAlertasScreen(),
-        'alertaInfo': (context) => const AlertaInfoScreen()
       },
       
       );
