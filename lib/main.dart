@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Definir la ruta inicial por defecto
-      initialRoute: 'login',
+      initialRoute: 'home',
 
       // Definir las demas rutas con sus respectivos componentes
       routes: {

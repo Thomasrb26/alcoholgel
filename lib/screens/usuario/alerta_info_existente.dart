@@ -12,8 +12,7 @@ class AlertaInfoExistenteScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-   final alertaService = Provider.of<AlertaService>(context);
-
+    final alertaService = Provider.of<AlertaService>(context);
     // Creamos mediante el provider una instancia de alerta.
     return ChangeNotifierProvider(
       create: (_) => AlertaFormProvider(
@@ -35,6 +34,31 @@ class _AlertaInfo extends StatelessWidget {
   // Instancia del servicio de alertas para utilizar conexion con la api.
   final AlertaService alertaService;
 
+  void confirmDelete(BuildContext context, String? id) {
+
+    showDialog(context: context, builder: (BuildContext ctx) {
+      return AlertDialog(
+        title: const Text("Confirmar acción"),
+        content: const Text('¿Estás seguro de querer eliminar esta alerta?'),
+        actions: [
+          TextButton(
+            onPressed: (){
+              alertaService.alertas.removeWhere((element) => element.id == id  );
+              Navigator.pushNamed(context, "home");
+            },
+            child: const Text('Sí')
+          ),
+          TextButton(
+            onPressed: (){
+              Navigator.of(context).pop();
+            },
+            child: const Text('No')
+          )
+        ],
+      );
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -80,8 +104,9 @@ class _AlertaInfo extends StatelessWidget {
                     ElevatedButton(
                       // onPressed:enviarAlertaDb,
                       onPressed: () async {
-                        await alertaService.crearAlerta(alerta);
-                        Navigator.pushNamed(context, 'vista_alertas');
+                          // await alertaService.crearAlerta(alerta);
+                          confirmDelete(context, alerta.id);
+                          // Navigator.pushNamed(context, 'vista_alertas');
                       } ,
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -108,7 +133,6 @@ class TablaInfo extends StatelessWidget {
   const TablaInfo({
     Key? key, required this.alerta,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Table(

@@ -18,6 +18,7 @@ class Alertas {
     required this.fechaCreacion,
     required this.sala,
     required this.tipoAlerta,
+    this.id
   });
 
   bool activa;
@@ -64,5 +65,6 @@ class Alertas {
     estado: estado, 
     fechaCreacion: fechaCreacion, 
     sala: sala, 
-    tipoAlerta: tipoAlerta);
+    tipoAlerta: tipoAlerta,
+    id:id);
 }
