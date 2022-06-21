@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
+import 'package:flutter_application_1/screens/usuario/alerta_info_existente.dart';
 
 
 void main() {
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
         'home':(context) => const MisAlertasScreen(),
+        'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
       },
       
       );

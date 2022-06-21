@@ -54,4 +54,15 @@ class Alertas {
     "sala": sala,
     "tipoAlerta": tipoAlerta,
   };
+
+  Alertas copia() => Alertas(
+    activa: activa, 
+    comentario: comentario,
+    creadoPor: creadoPor,
+    edificio: edificio, 
+    encargado: encargado, 
+    estado: estado, 
+    fechaCreacion: fechaCreacion, 
+    sala: sala, 
+    tipoAlerta: tipoAlerta);
 }

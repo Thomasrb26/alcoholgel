@@ -1,44 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/alerta.dart';
 import 'package:flutter_application_1/providers/alerta_form_provider.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
 import 'package:flutter_application_1/services/alerta_service.dart';
-import 'package:flutter_application_1/utils/qrscan.dart';
 import 'package:provider/provider.dart';
 
-/// Vista de informacion de una alerta luego de escanear el codigo QR del dispensador.
-/// En esta vista es posible elegir parametros para la alerta y luego enviarla hacia 
-/// la base de datos de Firebase.
-class AlertaInfoScreen extends StatelessWidget {
-
-  const AlertaInfoScreen({Key? key }) : super(key: key);
+class AlertaInfoExistenteScreen extends StatelessWidget {
+   
+  const AlertaInfoExistenteScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
+   final alertaService = Provider.of<AlertaService>(context);
 
-    final alertaService = Provider.of<AlertaService>(context);
-
-    String getDate() {
-      final now = DateTime.now();
-      return "${now.day}-${now.month}-${now.year}";
-    }
     // Creamos mediante el provider una instancia de alerta.
     return ChangeNotifierProvider(
       create: (_) => AlertaFormProvider(
-        // Creacion de una instancia de alerta.
-        Alertas(
-          activa: true, 
-          creadoPor: "user", 
-          edificio: QrScan.jsonBarCode['edificio'], 
-          encargado: '', 
-          estado: "pendiente", 
-          fechaCreacion:getDate(), 
-          sala:  QrScan.jsonBarCode['sala'], 
-          comentario: '', 
-          tipoAlerta: 'Falta Alcohol'
-        )
+        alertaService.alertaSeleccionada
       ),
 
       // Luego de crear el provider con la alerta se la enviamos a la vista.
@@ -58,8 +37,11 @@ class _AlertaInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final alertaForm = Provider.of<AlertaFormProvider>(context);
+
     final alerta = alertaForm.alerta;
+    
     return Scaffold(
       key: alertaForm.formKey,
       resizeToAvoidBottomInset: false,
@@ -92,49 +74,9 @@ class _AlertaInfo extends StatelessWidget {
                       ),
                     ),
                     const Divider(),
-                    ListTile(
-                      leading: const Text('Edificio', 
-                      style: TextStyle(fontSize: 17),
-        
-                      ),
-                      trailing: Text(alerta.edificio,
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
-                    ),
+                    TablaInfo(alerta:alerta),
                     const Divider(),
-                    ListTile(
-                      leading: const Text('Sala', 
-                      style: TextStyle(fontSize: 17),
-                      ),
-                      trailing: Text(alerta.sala,
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
-                    ),
-                    const Divider(),
-                    const SizedBox(height: 30,),
-                    const Text('Selecionar tipo de alerta',
-                      style: TextStyle(
-                        fontSize: 16, 
-                        color: Colors.grey
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    const SelectTipoAlerta(),
-                    const SizedBox(height: 10,),
-                    const Text('Comentario',
-                      style: TextStyle(
-                        fontSize: 16, 
-                        color: Colors.grey
-                      ),
-                    ),
                     const SizedBox(height: 20,),
-                    const InputComentario(
-                      // labelText: 'Comentario',
-                      hintText: 'Escribe tu Comentario',
-                      formProperty: 'comentario', 
-                      // formValues: formValues
-                    ),
-                    const SizedBox(height: 40,),
                     ElevatedButton(
                       // onPressed:enviarAlertaDb,
                       onPressed: () async {
@@ -144,8 +86,8 @@ class _AlertaInfo extends StatelessWidget {
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         child: Text(
-                          'Enviar Alerta',
-                          style: TextStyle(fontSize: 20),
+                          'Eliminar Alerta',
+                          style: TextStyle(fontSize: 16),
                         ),
                       )
                     )
@@ -155,6 +97,84 @@ class _AlertaInfo extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class TablaInfo extends StatelessWidget {
+
+  final Alertas alerta;
+
+  const TablaInfo({
+    Key? key, required this.alerta,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Table(
+      border: TableBorder.symmetric(),
+      children: [
+        TableRow(
+          children: [
+            Container(padding: const EdgeInsets.only(bottom: 20),  
+              child: const Text('Edificio', style: TextStyle(fontSize: 17))
+            ),
+            Container(padding: const EdgeInsets.only(bottom: 20), 
+              child: Text(alerta.edificio,style: const TextStyle(fontSize: 17, color: Colors.grey))
+            )
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(padding: const EdgeInsets.only(bottom: 20),  
+              child: const Text('Sala', style: TextStyle(fontSize: 17))
+            ),
+            Container(padding: const EdgeInsets.only(bottom: 20), 
+              child: Text(alerta.sala,style: const TextStyle(fontSize: 17, color: Colors.grey))
+            )
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(padding: const EdgeInsets.only(bottom: 20),  
+              child: const Text('Fecha Creación', style: TextStyle(fontSize: 17))
+            ),
+            Container(padding: const EdgeInsets.only(bottom: 20), 
+              child: Text(alerta.fechaCreacion,style: const TextStyle(fontSize: 17, color: Colors.grey))
+            )
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(padding: const EdgeInsets.only(bottom: 20),  
+              child: const Text('Tipo', style: TextStyle(fontSize: 17))
+            ),
+            Container(padding: const EdgeInsets.only(bottom: 20), 
+              child: Text(alerta.tipoAlerta,style: const TextStyle(fontSize: 17, color: Colors.grey))
+            )
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(padding: const EdgeInsets.only(bottom: 20),  
+              child: const Text('Estado', style: TextStyle(fontSize: 17))
+            ),
+            Container(padding: const EdgeInsets.only(bottom: 20), 
+              child: Text(alerta.estado,style: const TextStyle(fontSize: 17, color: Colors.grey))
+            )
+          ]
+        ),
+        TableRow(
+          children: [
+            Container(padding: const EdgeInsets.only(bottom: 20),  
+              child: const Text('Comentario', style: TextStyle(fontSize: 17))
+            ),
+            Container(padding: const EdgeInsets.only(bottom: 20), 
+              child: Text(alerta.comentario,style: const TextStyle(fontSize: 17, color: Colors.grey))
+            )
+          ]
+        ),
+      ],
     );
   }
 }
