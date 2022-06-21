@@ -30,19 +30,27 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
   // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
-    List<Alertas> listaAlertas = alertaService.alertas; //original
-    List<Alertas> filtrarAlertas(){
-      List<Alertas> alertasFiltradas;
-      String estadoMenu;
+    List<Alertas> listaAlertas = alertaService.alertas;
+    
+    String setEstadoMenu(){
 
       if (_selectedIndex == 0) {
-        estadoMenu = 'Nueva';
+        return 'Nueva';
       } else if (_selectedIndex == 1) {
-        estadoMenu = 'Aceptada';
+        return 'Aceptada';
       } else{
-        estadoMenu = 'Completada';
+        return 'Completada';
       }
-      alertasFiltradas = listaAlertas.where((alerta) => alerta.estado == estadoMenu ).toList();
+    }
+    
+    
+    
+    
+     //original
+    List<Alertas> filtrarAlertas(){
+      List<Alertas> alertasFiltradas;
+      
+      alertasFiltradas = listaAlertas.where((alerta) => alerta.estado == setEstadoMenu() ).toList();
       return alertasFiltradas;
     }
 
@@ -92,12 +100,10 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
       body: Center(
         // TODO WIDGET DE LISTA DE ALERTAS 
         child: ListView.builder(
+          itemCount: 2,
           itemBuilder: (context, index) => 
             CardAlertaFuncionario(
-              fecha: fecha, 
-              estado: estado, 
-              sala: sala, 
-              edificio: edificio
+              alerta: listaAlertas[index], estadoMenu: setEstadoMenu(),
             )
         ,),
       ),

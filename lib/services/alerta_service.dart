@@ -81,11 +81,11 @@ class AlertaService extends ChangeNotifier {
   /// Metodo para actualizar los datos de una alerta
   Future updateAlerta(Alertas alerta) async {
     final url = Uri.https(_baseUrl,'alertas/${alerta.id}.json');
-    final resp = await http.put(url, body:alerta.toJson());
+    final resp = await http.put(url, body:json.encode(alerta.toJson()));
     final decodedData = json.decode(resp.body);
+    print(decodedData);
     alerta.id = decodedData['name'];
-    alertas.add(alerta);
-    return alerta.id!;
+    // return alerta.id!;
   }
 
 }
