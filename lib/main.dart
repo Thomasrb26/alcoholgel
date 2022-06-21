@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Definir la ruta inicial por defecto
-      initialRoute: 'login',
+      initialRoute: 'home_funcionario',
 
       // Definir las demas rutas con sus respectivos componentes
       routes: {
@@ -43,6 +43,8 @@ class MyApp extends StatelessWidget {
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
         'home':(context) => const MisAlertasScreen(),
+        'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
+        'home_funcionario':(context) => const HomeFuncionarioScreen()
       },
       
       );

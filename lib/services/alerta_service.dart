@@ -12,6 +12,8 @@ class AlertaService extends ChangeNotifier {
   final String _baseUrl = 'alcoholgel-app-utal-default-rtdb.firebaseio.com';
   final List<Alertas> alertas = [];
 
+  late Alertas alertaSeleccionada;
+
   bool isLoading = true;
   bool isSaving = false;
   AlertaService(){
@@ -34,6 +36,7 @@ class AlertaService extends ChangeNotifier {
       alertasMap.forEach((key, value) {
         final tempAlerta = Alertas.fromJson(value);
         tempAlerta.id = key;
+        print(tempAlerta.id);
         alertas.add(tempAlerta);
       });
     }

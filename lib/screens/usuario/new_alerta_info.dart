@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/alerta.dart';
 import 'package:flutter_application_1/providers/alerta_form_provider.dart';
@@ -58,8 +57,11 @@ class _AlertaInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final alertaForm = Provider.of<AlertaFormProvider>(context);
+
     final alerta = alertaForm.alerta;
+    
     return Scaffold(
       key: alertaForm.formKey,
       resizeToAvoidBottomInset: false,

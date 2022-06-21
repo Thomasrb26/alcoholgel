@@ -18,6 +18,7 @@ class Alertas {
     required this.fechaCreacion,
     required this.sala,
     required this.tipoAlerta,
+    this.id
   });
 
   bool activa;
@@ -54,4 +55,16 @@ class Alertas {
     "sala": sala,
     "tipoAlerta": tipoAlerta,
   };
+
+  Alertas copia() => Alertas(
+    activa: activa, 
+    comentario: comentario,
+    creadoPor: creadoPor,
+    edificio: edificio, 
+    encargado: encargado, 
+    estado: estado, 
+    fechaCreacion: fechaCreacion, 
+    sala: sala, 
+    tipoAlerta: tipoAlerta,
+    id:id);
 }

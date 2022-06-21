@@ -25,16 +25,9 @@ class MisAlertasScreen extends StatelessWidget {
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
     if(alertaService.isLoading) return const LoadingScreen(header:'Mis Alertas');
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      theme: AppTheme.lightTheme,
-      home: Scaffold(
-
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Mis alertas'),
-          backgroundColor: Colors.red[900],
-          elevation: 0,
         ),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -52,11 +45,9 @@ class MisAlertasScreen extends StatelessWidget {
           ), 
           ] 
         ),
-        
         //Lista de alertas para el usuario.
         body: ListAlertas(alertaService: alertaService)
-      ),
-    );
+      );
   }
 }
 
@@ -71,27 +62,32 @@ class ListAlertas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(alertaService.alertas);
     if(alertaService.alertas.isNotEmpty){
       return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         itemCount: alertaService.alertas.length,
         itemBuilder: (context,i) =>  
-          CardAlertaUsuario(
-          edificio: alertaService.alertas[i].edificio, 
-          fecha: alertaService.alertas[i].fechaCreacion, 
-          estado: alertaService.alertas[i].estado, 
-          sala: alertaService.alertas[i].sala, 
-        )
+          GestureDetector(
+            onTap: (){
+              alertaService.alertaSeleccionada = alertaService.alertas[i].copia();
+              Navigator.pushNamed(context, 'alertaExistente');
+            },
+            child: CardAlertaUsuario(
+              edificio: alertaService.alertas[i].edificio, 
+              fecha: alertaService.alertas[i].fechaCreacion, 
+              estado: alertaService.alertas[i].estado, 
+              sala: alertaService.alertas[i].sala, 
+            ),
+          )
       );
     }
     else{
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Icon(Icons.question_mark_rounded, color: Colors.grey,),
-            const Text("No existen alertas", style: TextStyle(color: Colors.grey),),
+            Text("No existen alertas", style: TextStyle(color: Colors.grey),),
           ],
         ),
       );
