@@ -7,6 +7,7 @@ export 'package:flutter_application_1/screens/usuario/usuario.dart';
 export 'package:flutter_application_1/services/services.dart';
 export 'package:flutter_application_1/themes/app_theme.dart';
 export 'package:provider/provider.dart';
-import 'package:flutter_application_1/screens/usuario/alerta_info_existente.dart';
+export 'package:flutter_application_1/screens/usuario/alerta_info_existente.dart';
+export 'package:flutter_application_1/screens/funcionario/home_funcionario.dart';
 
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/screens/usuario/alerta_info_existente.dart';
 
 
 void main() {
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Definir la ruta inicial por defecto
-      initialRoute: 'home',
+      initialRoute: 'home_funcionario',
 
       // Definir las demas rutas con sus respectivos componentes
       routes: {
@@ -45,6 +44,7 @@ class MyApp extends StatelessWidget {
         'loginFun': ((context) => const LoginFuncionario()),
         'home':(context) => const MisAlertasScreen(),
         'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
+        'home_funcionario':(context) => const HomeFuncionarioScreen()
       },
       
       );

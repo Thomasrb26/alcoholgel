@@ -28,8 +28,6 @@ class MisAlertasScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mis alertas'),
-          backgroundColor: Colors.red[900],
-          elevation: 0,
         ),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
