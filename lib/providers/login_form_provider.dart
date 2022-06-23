@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoginFormProvider extends ChangeNotifier {
-  GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String matricula = '';
 
@@ -16,7 +16,7 @@ class LoginFormProvider extends ChangeNotifier {
   bool isValidForm() {
     print(formKey.currentState?.validate());
 
-    print('$matricula');
+    print(matricula);
 
     return formKey.currentState?.validate() ?? false;
   }

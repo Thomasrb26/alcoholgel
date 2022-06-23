@@ -9,19 +9,19 @@ class DisenologinFuncionario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 238, 238, 240),
+      color: const Color.fromARGB(255, 238, 238, 240),
       width: double.infinity,
       height: double.infinity,
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
               child: Image(
                 image: AssetImage('images/logoutal.png'),
                 height: 200,
               ),
               top: 120,
               left: 100),
-          Positioned(
+          const Positioned(
               child: Image(
                 image: AssetImage('images/logoingenieria.png'),
                 height: 100,
@@ -34,7 +34,7 @@ class DisenologinFuncionario extends StatelessWidget {
 
           //Positioned(child: _botonlogin2(), top: 570, left: 114),
           //_HeaderIcon(),
-          this.child,
+          child,
         ],
       ),
     );
@@ -60,7 +60,7 @@ Widget _botonlogin() {
           // final route = MaterialPageRoute(
           //     builder: (context) => const MisAlertasScreen());
           // Navigator.push(context, route);
-          Navigator.pushNamed(context, 'vista_alertas');
+          Navigator.pushNamed(context, '');
         });
   });
 }
@@ -74,7 +74,7 @@ Widget solicitarRut() {
         decoration: const InputDecoration(
             icon: Icon(Icons.login),
             hintText: '12345678-9',
-            labelText: ('Ingrese su rut')),
+            labelText: ('Ingrese Su Rut')),
         onChanged: (value) {},
       ),
     );

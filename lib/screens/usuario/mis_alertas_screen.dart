@@ -20,55 +20,69 @@ class MisAlertasScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String _barcode = '';
     final alertaService = Provider.of<AlertaService>(context);
+
+    // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
+    if (alertaService.isLoading) {
+      return const LoadingScreen(header: 'Mis Alertas');
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       theme: AppTheme.lightTheme,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Mis alertas'),
-          backgroundColor: Colors.red[900],
-          elevation: 0,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-          FloatingActionButton(
-            heroTag: 'btn1',
-            onPressed: () {
-              QrScan.scan(_barcode);
-              // Navigator.pushNamed(context, 'scanqr');
-            },
-            child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+          appBar: AppBar(
+            title: const Text('Mis alertas'),
+            backgroundColor: Colors.red[900],
+            elevation: 0,
           ),
-          FloatingActionButton(
-            heroTag: 'btn2',
-            onPressed: () {
-              
-              Navigator.pushNamed(context, 'alertaInfo');
-            },
-            child: const Icon(Icons.insert_drive_file_rounded,size:35,),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton:
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            FloatingActionButton(
+              heroTag: 'btn1',
+              onPressed: () {
+                QrScan.scan(_barcode, context);
+                // Navigator.pushNamed(context, 'alertaInfo',arguments: _barcode);
+              },
+              child: const Icon(
+                Icons.qr_code_scanner_sharp,
+                size: 35,
+              ),
+            ),
+            // FloatingActionButton(
+            //   heroTag: 'btn2',
+            //   onPressed: () {
+
+            //     Navigator.pushNamed(context, 'alertaInfo');
+            //   },
+            //   child: const Icon(Icons.insert_drive_file_rounded,size:35,),
+            // ),
+          ]),
+          body: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              itemCount: alertaService.alertas.length,
+              itemBuilder: (context, i) => CardAlertaUsuario(
+                    edificio: alertaService.alertas[i].edificio,
+                    fecha: alertaService.alertas[i].fechaCreacion,
+                    estado: alertaService.alertas[i].estado,
+                    sala: alertaService.alertas[i].sala,
+                  ))
+
+          // body: ListView.separated(
+          //   itemCount: historial.length,
+          //   itemBuilder: (context, index) => ListTile(
+          //     title: Text(historial[index]),
+          //     trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
+          //     onTap: () {},
+          //   ),
+          //   separatorBuilder: (_, __) => const Divider(),
+
+          // ),
           ),
-          
-          ] 
-        ),
-        
-        body: ListView.separated(
-          itemCount: historial.length,
-          itemBuilder: (context, index) => ListTile(
-            title: Text(historial[index]),
-            trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
-            onTap: () {},
-          ),
-          separatorBuilder: (_, __) => const Divider(),
-          
-        ),
-      ),
     );
   }
 }

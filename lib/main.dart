@@ -12,7 +12,10 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AlertaService())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AlertaService()),
+        //ChangeNotifierProvider(create: (_) => AuthService()),
+      ],
       child: const MyApp(),
     );
   }
@@ -31,9 +34,12 @@ class MyApp extends StatelessWidget {
         'login': (context) => const LoginPage(),
         'vista_alertas': (context) => const MisAlertasScreen(),
         // 'scanqr':(context) => const QrScan(),
-        'alertaInfo': (context) => const AlertaInfoScreen(),
+        //'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
+        'home': (context) => const MisAlertasScreen(),
+        'alertaInfo': (context) => const AlertaInfoScreen(),
+        'register': (_) => const RegisterScreen(),
       },
     );
   }

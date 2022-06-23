@@ -6,20 +6,20 @@ class Cardcontainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         decoration: _createCardShape(),
-        child: this.child,
+        child: child,
       ),
     );
   }
 
   BoxDecoration _createCardShape() => BoxDecoration(
-          color: Color.fromARGB(255, 228, 222, 222),
+          color: const Color.fromARGB(255, 228, 222, 222),
           borderRadius: BorderRadius.circular(25),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black12,
               blurRadius: 15,

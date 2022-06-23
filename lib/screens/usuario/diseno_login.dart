@@ -8,20 +8,20 @@ class Disenologin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 238, 238, 240),
+      color: const Color.fromARGB(255, 238, 238, 240),
       width: double.infinity,
       height: double.infinity,
       child: Stack(
         children: [
-          Positioned(
-              child: const Image(
+          const Positioned(
+              child: Image(
                 image: AssetImage('images/logoutal.png'),
                 height: 200,
               ),
               top: 120,
               left: 100),
-          Positioned(
-              child: const Image(
+          const Positioned(
+              child: Image(
                 image: AssetImage('images/logoingenieria.png'),
                 height: 100,
               ),
@@ -31,7 +31,7 @@ class Disenologin extends StatelessWidget {
           Positioned(child: _botonlogin(), top: 480, left: 110),
           Positioned(child: _botonlogin2(), top: 570, left: 114),
           //_HeaderIcon(),
-          this.child,
+          child,
         ],
       ),
     );

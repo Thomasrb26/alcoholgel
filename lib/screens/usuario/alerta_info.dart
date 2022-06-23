@@ -1,6 +1,4 @@
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
 import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';

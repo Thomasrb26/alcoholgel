@@ -8,19 +8,19 @@ class DisenologinUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 238, 238, 240),
+      color: const Color.fromARGB(255, 238, 238, 240),
       width: double.infinity,
       height: double.infinity,
       child: Stack(
         children: [
-          Positioned(
+          const Positioned(
               child: Image(
                 image: AssetImage('images/logoutal.png'),
                 height: 200,
               ),
               top: 120,
               left: 100),
-          Positioned(
+          const Positioned(
               child: Image(
                 image: AssetImage('images/logoingenieria.png'),
                 height: 100,
@@ -33,7 +33,7 @@ class DisenologinUsuario extends StatelessWidget {
 
           //Positioned(child: _botonlogin2(), top: 570, left: 114),
           //_HeaderIcon(),
-          this.child,
+          child,
         ],
       ),
     );
@@ -64,7 +64,7 @@ Widget _botonlogin() {
   });
 }
 
-Widget solicitarRut() {
+Widget solicitarMatricula() {
   return StreamBuilder(builder: (BuildContext context, AsyncSnapshot snapshot) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -73,7 +73,7 @@ Widget solicitarRut() {
         decoration: const InputDecoration(
             icon: Icon(Icons.login),
             hintText: '2016407026',
-            labelText: ('Ingrese su matricula')),
+            labelText: ('Ingrese su Matricula')),
         onChanged: (value) {},
       ),
     );
