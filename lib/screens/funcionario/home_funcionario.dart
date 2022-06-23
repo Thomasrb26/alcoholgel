@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
 import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/screens/funcionario/Card_Alerta_Funcionario.dart';
+import 'package:flutter_application_1/screens/funcionario/card_Alerta_Funcionario.dart';
 import 'package:flutter_application_1/screens/shared/loading_screen.dart';
+import 'package:flutter_application_1/widgets/widgets.dart';
 
 class HomeFuncionarioScreen extends StatefulWidget {
-   
   const HomeFuncionarioScreen({Key? key}) : super(key: key);
-  
+
   @override
   State<HomeFuncionarioScreen> createState() => _HomeFuncionarioScreenState();
 }
 
 class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
-  
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  
+
+  void recargarHome() {
+    setState(() {});
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -27,56 +27,36 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-  // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
+    // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
     List<Alertas> listaAlertas = alertaService.alertas;
-    
-    String setEstadoMenu(){
 
+    String setEstadoMenu() {
       if (_selectedIndex == 0) {
         return 'Nueva';
       } else if (_selectedIndex == 1) {
         return 'Aceptada';
-      } else{
+      } else {
         return 'Completada';
       }
     }
-    
-    
-    
-    
-     //original
-    List<Alertas> filtrarAlertas(){
-      List<Alertas> alertasFiltradas;
-      
-      alertasFiltradas = listaAlertas.where((alerta) => alerta.estado == setEstadoMenu() ).toList();
-      return alertasFiltradas;
+
+    //original
+    List<Alertas> filtrarAlertas() {
+      return listaAlertas
+          .where((alerta) => alerta.estado == setEstadoMenu())
+          .toList();
     }
 
-    // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
-    if(alertaService.isLoading) return const LoadingScreen(header:'Mis Alertas');
+    List<Alertas> listaFilrada = filtrarAlertas();
 
-    const List<Widget> _widgetOptions = <Widget>[
-    // 0: Alertas nuevas
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    // 1: Alertas Aceptadas
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    // 2: Alertas completadas 
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
+    // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
+    if (alertaService.isLoading)
+      return const LoadingScreen(header: 'Mis Alertas');
+
     return Scaffold(
       appBar: AppBar(
-        title:  const Text('Alertas'),
+        title: const Text('Alertas'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -98,14 +78,18 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
         onTap: _onItemTapped,
       ),
       body: Center(
-        // TODO WIDGET DE LISTA DE ALERTAS 
+        // TODO WIDGET DE LISTA DE ALERTAS
         child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) => 
-            CardAlertaFuncionario(
-              alerta: listaAlertas[index], estadoMenu: setEstadoMenu(),
-            )
-        ,),
+          itemCount: listaFilrada.length,
+          itemBuilder: (context, index) => CardAlertaFuncionario(
+            alerta: listaFilrada[index],
+            estadoMenu: setEstadoMenu(),
+            notifyParent: recargarHome,
+          )
+          // CardAcordeonAlertaScreen()
+          ,
+        ),
+        // child: CardAcordeonAlertaScreen(),
       ),
     );
   }
