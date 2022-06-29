@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
 import 'package:flutter_application_1/services/auth_service.dart';
 
-
 void main() {
   runApp(const AppState());
 }
@@ -50,7 +49,6 @@ class MyApp extends StatelessWidget {
         'home_funcionario':(context) => const HomeFuncionarioScreen(),
         'check_auth':(context) => const CheckAuthScreen(),
       },
-      
-      );
+    );
   }
 }

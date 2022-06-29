@@ -41,7 +41,14 @@ class MisAlertasScreen extends StatelessWidget {
           ),]
         ),
 
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          // body: ListView.separated(
+          //   itemCount: historial.length,
+          //   itemBuilder: (context, index) => ListTile(
+          //     title: Text(historial[index]),
+          //     trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
+          //     onTap: () {},
+          //   ),
+          //   separatorBuilder: (_, __) => const Divider(),
 
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
