@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
 import 'package:flutter_application_1/models/alerta.dart';
@@ -30,9 +31,8 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
     List<Alertas> listaAlertas = alertaService.alertas;
-    
-    String setEstadoMenu(){
 
+    String setEstadoMenu() {
       if (_selectedIndex == 0) {
         return 'Nueva';
       } else if (_selectedIndex == 1) {
@@ -41,13 +41,13 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
         return 'Completada';
       }
     }
-    
-    String getTitle(){
+
+    String getTitle() {
       if (_selectedIndex == 0) {
         return 'Alertas Nuevas';
       } else if (_selectedIndex == 1) {
         return 'Alertas Aceptadas';
-      } else{
+      } else {
         return 'Alertas Completadas';
       }
     }
@@ -62,11 +62,12 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     List<Alertas> listaFilrada = filtrarAlertas();
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
-    if (alertaService.isLoading) return const LoadingScreen(header: 'Mis Alertas');
+    if (alertaService.isLoading)
+      return const LoadingScreen(header: 'Mis Alertas');
 
     return Scaffold(
       appBar: AppBar(
-        title:  const Text('Alcohol Gel UTAL'),
+        title: const Text('Alcohol Gel UTAL'),
       ),
       bottomNavigationBar: menuNavegacion(),
       body: SingleChildScrollView(
@@ -76,25 +77,23 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                getTitle(), 
-                style: const TextStyle(
-                  fontSize: 17, 
-                  fontWeight: FontWeight.bold
-                ),
+                getTitle(),
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
             ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: listaFilrada.length,
-              itemBuilder: (context, index) => 
-                CardAlertaFuncionario(
-                  alerta: listaFilrada[index], 
-                  notifyParent: recargarHome, 
-                  ubicacion: _selectedIndex,
-                )
-                // CardAcordeonAlertaScreen()
-            ,),
+              itemBuilder: (context, index) => CardAlertaFuncionario(
+                alerta: listaFilrada[index],
+                notifyParent: recargarHome,
+                ubicacion: _selectedIndex,
+              )
+              // CardAcordeonAlertaScreen()
+              ,
+            ),
           ],
         ),
       ),
@@ -103,9 +102,17 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
   BottomNavigationBar menuNavegacion() {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.playlist_add),
+          icon: Badge(
+            showBadge: true,
+            badgeContent:
+                Text('6', style: const TextStyle(color: Colors.white)),
+            animationType: BadgeAnimationType.scale,
+            shape: BadgeShape.circle,
+            //position: BadgePosition.center(),
+            child: const Icon(Icons.playlist_add),
+          ),
           label: 'Nuevas',
         ),
         BottomNavigationBarItem(
