@@ -30,6 +30,7 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
   Widget build(BuildContext context) {
     // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
+
     List<Alertas> listaAlertas = alertaService.alertas;
 
     String setEstadoMenu() {
@@ -61,6 +62,18 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
     List<Alertas> listaFilrada = filtrarAlertas();
 
+    int getNuevasAlertas() {
+      int cantidad = 0;
+      for (var i = 0; i < listaAlertas.length; i++) {
+        if (listaAlertas[i].estado == 'Nueva') {
+          cantidad++;
+        }
+      }
+      print('cantidad');
+      print(cantidad);
+      return cantidad;
+    }
+
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
     if (alertaService.isLoading)
       return const LoadingScreen(header: 'Mis Alertas');
@@ -69,7 +82,7 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
       appBar: AppBar(
         title: const Text('Alcohol Gel UTAL'),
       ),
-      bottomNavigationBar: menuNavegacion(),
+      bottomNavigationBar: menuNavegacion(getNuevasAlertas()),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,14 +113,14 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     );
   }
 
-  BottomNavigationBar menuNavegacion() {
+  BottomNavigationBar menuNavegacion(int cantidad) {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Badge(
             showBadge: true,
             badgeContent:
-                Text('6', style: const TextStyle(color: Colors.white)),
+                Text('$cantidad', style: const TextStyle(color: Colors.white)),
             animationType: BadgeAnimationType.scale,
             shape: BadgeShape.circle,
             //position: BadgePosition.center(),
