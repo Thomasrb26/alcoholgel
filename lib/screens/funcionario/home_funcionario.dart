@@ -62,8 +62,7 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     List<Alertas> listaFilrada = filtrarAlertas();
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
-    if (alertaService.isLoading)
-      return const LoadingScreen(header: 'Mis Alertas');
+    if (alertaService.isLoading) return const LoadingScreen(header: 'Mis Alertas');
 
     return Scaffold(
       appBar: AppBar(
@@ -98,20 +97,6 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
             ,),
           ],
         ),
-      ),
-      body: Center(
-        // TODO WIDGET DE LISTA DE ALERTAS
-        child: ListView.builder(
-          itemCount: listaFilrada.length,
-          itemBuilder: (context, index) => CardAlertaFuncionario(
-            alerta: listaFilrada[index],
-            estadoMenu: setEstadoMenu(),
-            notifyParent: recargarHome,
-          )
-          // CardAcordeonAlertaScreen()
-          ,
-        ),
-        // child: CardAcordeonAlertaScreen(),
       ),
     );
   }
