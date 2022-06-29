@@ -36,7 +36,6 @@ class AlertaService extends ChangeNotifier {
       alertasMap.forEach((key, value) {
         final tempAlerta = Alertas.fromJson(value);
         tempAlerta.id = key;
-        print(tempAlerta.id);
         alertas.add(tempAlerta);
       });
     }

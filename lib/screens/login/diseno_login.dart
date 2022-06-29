@@ -73,7 +73,8 @@ Widget _botonFuncionario() {
         ),
         elevation: 20,
         onPressed: () {
-          Navigator.pushNamed(context, 'loginFun');
+          // Navigator.pushNamed(context, 'loginFun');
+          Navigator.pushNamed(context, 'home_funcionario');
         });
   });
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
 import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/screens/funcionario/card_Alerta_Funcionario.dart';
+import 'package:flutter_application_1/screens/funcionario/Card_Alerta_Funcionario.dart';
 import 'package:flutter_application_1/screens/shared/loading_screen.dart';
 import 'package:flutter_application_1/widgets/widgets.dart';
 
@@ -30,14 +30,25 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
     List<Alertas> listaAlertas = alertaService.alertas;
+    
+    String setEstadoMenu(){
 
-    String setEstadoMenu() {
       if (_selectedIndex == 0) {
         return 'Nueva';
       } else if (_selectedIndex == 1) {
         return 'Aceptada';
       } else {
         return 'Completada';
+      }
+    }
+    
+    String getTitle(){
+      if (_selectedIndex == 0) {
+        return 'Alertas Nuevas';
+      } else if (_selectedIndex == 1) {
+        return 'Alertas Aceptadas';
+      } else{
+        return 'Alertas Completadas';
       }
     }
 
@@ -56,26 +67,37 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alertas'),
+        title:  const Text('Alcohol Gel UTAL'),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add),
-            label: 'Nuevas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer_sharp),
-            label: 'Aceptadas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_check),
-            label: 'Completadas',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: AppTheme.primary,
-        onTap: _onItemTapped,
+      bottomNavigationBar: menuNavegacion(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                getTitle(), 
+                style: const TextStyle(
+                  fontSize: 17, 
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: listaFilrada.length,
+              itemBuilder: (context, index) => 
+                CardAlertaFuncionario(
+                  alerta: listaFilrada[index], 
+                  notifyParent: recargarHome, 
+                  ubicacion: _selectedIndex,
+                )
+                // CardAcordeonAlertaScreen()
+            ,),
+          ],
+        ),
       ),
       body: Center(
         // TODO WIDGET DE LISTA DE ALERTAS
@@ -91,6 +113,28 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
         ),
         // child: CardAcordeonAlertaScreen(),
       ),
+    );
+  }
+
+  BottomNavigationBar menuNavegacion() {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.playlist_add),
+          label: 'Nuevas',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.timer_sharp),
+          label: 'Aceptadas',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.playlist_add_check),
+          label: 'Completadas',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: AppTheme.primary,
+      onTap: _onItemTapped,
     );
   }
 }
