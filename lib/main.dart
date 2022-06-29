@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
+import 'package:flutter_application_1/services/auth_service.dart';
+
 
 void main() {
   runApp(const AppState());
@@ -14,8 +16,8 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AlertaService()),
-        //ChangeNotifierProvider(create: (_) => AuthService()),
-      ],
+        ChangeNotifierProvider(create: (_) => AuthService())
+        ],
       child: const MyApp(),
     );
   }
@@ -27,20 +29,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+      // Quitar banner de modo debug en previsualizacion de android.
       debugShowCheckedModeBanner: false,
+
+      // Definir el tema global de la aplicacion
       theme: AppTheme.lightTheme,
-      initialRoute: 'login',
+
+      // Definir la ruta inicial por defecto
+      initialRoute: 'check_auth',
+
+      // Definir las demas rutas con sus respectivos componentes
       routes: {
         'login': (context) => const LoginPage(),
-        'vista_alertas': (context) => const MisAlertasScreen(),
-        // 'scanqr':(context) => const QrScan(),
-        //'alertaInfo': (context) => const AlertaInfoScreen(),
+        'home_usuario': (context) => const MisAlertasScreen(),
+        'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
-        'home': (context) => const MisAlertasScreen(),
-        'alertaInfo': (context) => const AlertaInfoScreen(),
-        'register': (_) => const RegisterScreen(),
+        'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
+        'home_funcionario':(context) => const HomeFuncionarioScreen(),
+        'check_auth':(context) => const CheckAuthScreen(),
       },
-    );
+      
+      );
   }
 }

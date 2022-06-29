@@ -1,88 +1,160 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/usuario/ScannerQr.dart';
-import 'package:flutter_application_1/themes/app_theme.dart';
+import 'package:flutter_application_1/import.dart';
+import 'package:flutter_application_1/models/alerta.dart';
+import 'package:flutter_application_1/screens/shared/loading_screen.dart';
+import 'package:flutter_application_1/services/auth_service.dart';
+import 'package:flutter_application_1/utils/qrscan.dart';
+import 'package:flutter_application_1/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/services.dart';
 
+///Vista principal del usuario general. Se muestran las alertas existentes en base
+///de datos para el usuario. Contiene un boton flotante para escanear codigo QR
 class MisAlertasScreen extends StatelessWidget {
-  static String id = 'idMisAlertas';
-
-  final historial = const [
-    'notificacion Sala 2',
-    'notificacion Sala E-1',
-    'notificacion Sala S2',
-    'notificacion Sala 14',
-    'notificacion Sala 24'
-  ];
 
   const MisAlertasScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    // Variable para guardar la informacion del codigo QR.
     String _barcode = '';
+    // print('idUsuario ' + idUsuario!);
+    // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
+    final authService = Provider.of<AuthService>(context);
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
-    if (alertaService.isLoading) {
-      return const LoadingScreen(header: 'Mis Alertas');
-    }
+    if(alertaService.isLoading) return const LoadingScreen(header:'AlcoholGel Utal');
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      theme: AppTheme.lightTheme,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Mis alertas'),
-            backgroundColor: Colors.red[900],
-            elevation: 0,
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton:
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            FloatingActionButton(
-              heroTag: 'btn1',
-              onPressed: () {
-                QrScan.scan(_barcode, context);
-                // Navigator.pushNamed(context, 'alertaInfo',arguments: _barcode);
-              },
-              child: const Icon(
-                Icons.qr_code_scanner_sharp,
-                size: 35,
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('AlcoholGel Utal'),
+          actions: [IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              authService.logout();
+              Navigator.pushReplacementNamed(context, 'login');
+            },
+
+          ),]
+        ),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+          FloatingActionButton(
+            heroTag: 'btn1',
+            onPressed: () {
+              QrScan.scan(_barcode, context);
+              // Navigator.pushNamed(context, 'alertaInfo');
+            },
+            child: const Icon(Icons.qr_code_scanner_sharp, size:35,),
+          ), 
+          ] 
+        ),
+        //Lista de alertas para el usuario.
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              // padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(
+                left: 16,
+                top: 16,
+                bottom: 10,
+              ),
+              child: Text(
+                '¡Bienvenido/a ${authService.idUsuario}!', 
+                style: const TextStyle(
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: AppTheme.primary
+                ),
               ),
             ),
-            // FloatingActionButton(
-            //   heroTag: 'btn2',
-            //   onPressed: () {
+            Divider(),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Tus Alertas', 
+                style: TextStyle(
+                  fontSize: 17, 
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+            ListAlertas(alertaService: alertaService, authService: authService,),
+          ],
+        )
+      );
+  }
+}
 
-            //     Navigator.pushNamed(context, 'alertaInfo');
-            //   },
-            //   child: const Icon(Icons.insert_drive_file_rounded,size:35,),
-            // ),
-          ]),
-          body: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              itemCount: alertaService.alertas.length,
-              itemBuilder: (context, i) => CardAlertaUsuario(
-                    edificio: alertaService.alertas[i].edificio,
-                    fecha: alertaService.alertas[i].fechaCreacion,
-                    estado: alertaService.alertas[i].estado,
-                    sala: alertaService.alertas[i].sala,
-                  ))
+class ListAlertas extends StatelessWidget {
+ 
+  const ListAlertas({
+    Key? key,
+    required this.alertaService, 
+    required this.authService,
+  }) : super(key: key);
 
-          // body: ListView.separated(
-          //   itemCount: historial.length,
-          //   itemBuilder: (context, index) => ListTile(
-          //     title: Text(historial[index]),
-          //     trailing: const Icon(Icons.add_task, color: Colors.lightGreen),
-          //     onTap: () {},
-          //   ),
-          //   separatorBuilder: (_, __) => const Divider(),
+  final AlertaService alertaService;
+  final AuthService authService;
 
-          // ),
+  @override
+  Widget build(BuildContext context) {
+    
+    final List<Alertas> alertasUser = [];
+    
+    for (var alerta in alertaService.alertas) {
+      if(alerta.creadoPor == authService.idUsuario){
+        alertasUser.add(alerta);
+      }
+    }
+    if(alertasUser.isNotEmpty){
+      return ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount:alertasUser.length,
+        itemBuilder: (context,i) =>  
+          GestureDetector(
+            onTap: (){
+              alertaService.alertaSeleccionada = alertasUser[i].copia();
+              Navigator.pushNamed(context, 'alertaExistente');
+            },
+            child: CardAlertaUsuario(
+              edificio: alertasUser[i].edificio, 
+              fecha: alertasUser[i].fechaCreacion, 
+              estado: alertasUser[i].estado, 
+              sala:alertasUser[i].sala, 
+            ),
+          )
+      );
+    }
+    else{
+      return Center(
+        child: FractionallySizedBox(
+          widthFactor: 0.6,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.question_mark_rounded, color: Colors.grey,),
+              Text(
+                "No tienes alertas creadas, para crear una haz click en el botón flotante ubicado en la parte inferior para escanear un código QR.", 
+                style: TextStyle(color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
-    );
+        ),
+      );
+    }
+
   }
 }
