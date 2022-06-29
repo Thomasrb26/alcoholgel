@@ -9,5 +9,7 @@ export 'package:flutter_application_1/themes/app_theme.dart';
 export 'package:provider/provider.dart';
 export 'package:flutter_application_1/screens/usuario/alerta_info_existente.dart';
 export 'package:flutter_application_1/screens/funcionario/home_funcionario.dart';
+export 'package:flutter_application_1/screens/check_auth_screen.dart';
+
 
 

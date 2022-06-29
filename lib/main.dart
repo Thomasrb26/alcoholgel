@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
+import 'package:flutter_application_1/services/auth_service.dart';
 
 
 void main() {
@@ -13,7 +14,10 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AlertaService())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AlertaService()),
+        ChangeNotifierProvider(create: (_) => AuthService())
+        ],
       child: const MyApp(),
     );
   }
@@ -33,18 +37,18 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Definir la ruta inicial por defecto
-      initialRoute: 'login',
+      initialRoute: 'check_auth',
 
       // Definir las demas rutas con sus respectivos componentes
       routes: {
         'login': (context) => const LoginPage(),
-        'vista_alertas': (context) => const MisAlertasScreen(),
+        'home_usuario': (context) => const MisAlertasScreen(),
         'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
-        'home':(context) => const MisAlertasScreen(),
         'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
-        'home_funcionario':(context) => const HomeFuncionarioScreen()
+        'home_funcionario':(context) => const HomeFuncionarioScreen(),
+        'check_auth':(context) => const CheckAuthScreen(),
       },
       
       );
