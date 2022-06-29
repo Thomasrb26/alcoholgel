@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/alerta_form_provider.dart';
 
 class InputComentario extends StatelessWidget {
 
@@ -10,7 +13,7 @@ class InputComentario extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool isPassword;
   final String formProperty;
-  final Map<String, String> formValues;
+  // final Map<String, String> formValues;
   
   const InputComentario({
     Key? key, 
@@ -22,21 +25,25 @@ class InputComentario extends StatelessWidget {
     this.keyboardType, 
     this.isPassword = false,
     required this.formProperty, 
-    required this.formValues,
+    // required this.formValues,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final alertaForm = Provider.of<AlertaFormProvider>(context);
+    final alerta = alertaForm.alerta;
+
     return TextFormField(
       minLines: 5,
       maxLines: 5,
       autofocus: false,
-      initialValue: '',
+      initialValue: alerta.comentario,
       textCapitalization: TextCapitalization.words,
       keyboardType: keyboardType,
       obscureText:isPassword,
       onChanged: (value) {
-        formValues[formProperty] = value;
+        alerta.comentario = value;
+        // formValues[formProperty] = value;
         // print(value);
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
