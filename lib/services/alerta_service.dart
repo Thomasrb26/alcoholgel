@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/models.dart';
+import 'package:alcoholgelutal/models/models.dart';
 import 'package:http/http.dart' as http;
 
 /// Servicio para conexion con firabase, especificamente para la API 

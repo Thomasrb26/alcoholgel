@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/screens/shared/loading_screen.dart';
-import 'package:flutter_application_1/services/auth_service.dart';
-import 'package:flutter_application_1/utils/qrscan.dart';
-import 'package:flutter_application_1/widgets/widgets.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/models/alerta.dart';
+import 'package:alcoholgelutal/screens/shared/loading_screen.dart';
+import 'package:alcoholgelutal/services/auth_service.dart';
+import 'package:alcoholgelutal/utils/qrscan.dart';
+import 'package:alcoholgelutal/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/services.dart';

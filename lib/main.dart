@@ -1,6 +1,9 @@
+import 'package:alcoholgelutal/screens/usuario/mis_alertas_screen.dart';
+import 'package:alcoholgelutal/screens/usuario/new_alerta_info.dart';
+import 'package:alcoholgelutal/services/alerta_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/services/auth_service.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/services/auth_service.dart';
 
 
 void main() {

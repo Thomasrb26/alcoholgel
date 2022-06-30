@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/screens/funcionario/Card_Alerta_Funcionario.dart';
-import 'package:flutter_application_1/screens/shared/loading_screen.dart';
-import 'package:flutter_application_1/widgets/widgets.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/models/alerta.dart';
+import 'package:alcoholgelutal/screens/funcionario/Card_Alerta_Funcionario.dart';
+import 'package:alcoholgelutal/screens/shared/loading_screen.dart';
+import 'package:alcoholgelutal/widgets/widgets.dart';
 
 class HomeFuncionarioScreen extends StatefulWidget {
   const HomeFuncionarioScreen({Key? key}) : super(key: key);

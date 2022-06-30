@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/providers/login_form_provider.dart';
-import 'package:flutter_application_1/screens/login/diseno_usuario.dart';
-import 'package:flutter_application_1/services/auth_service.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/providers/login_form_provider.dart';
+import 'package:alcoholgelutal/screens/login/diseno_usuario.dart';
+import 'package:alcoholgelutal/services/auth_service.dart';
 
 class LoginUsuario extends StatefulWidget {
   static String id = 'login_usuario';

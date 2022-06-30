@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/providers/alerta_form_provider.dart';
-import 'package:flutter_application_1/services/alerta_service.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/models/alerta.dart';
+import 'package:alcoholgelutal/providers/alerta_form_provider.dart';
+import 'package:alcoholgelutal/services/alerta_service.dart';
 import 'package:provider/provider.dart';
 
 class AlertaInfoExistenteScreen extends StatelessWidget {
