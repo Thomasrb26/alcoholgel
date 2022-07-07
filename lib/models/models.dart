@@ -1,4 +1,4 @@
 // Archivo de ayuda para exportacion de modelos
 
-export 'package:alcoholgelutal/models/alerta.dart';
+export 'package:flutter_application_1/models/alerta.dart';
 

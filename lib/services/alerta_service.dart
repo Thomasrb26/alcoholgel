@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:alcoholgelutal/models/models.dart';
+import 'package:flutter_application_1/models/models.dart';
 import 'package:http/http.dart' as http;
 
 /// Servicio para conexion con firabase, especificamente para la API 
@@ -44,7 +44,6 @@ class AlertaService extends ChangeNotifier {
 
   }
 
-
   /// Metodo reutilizable para actualiza o crear una alerta, dependiendo si
   /// existe un id de firabase ligada a ella. Si no existe, se considera que es
   /// una nueva alerta, de lo contrario ya existe y solo se actualiza.
@@ -85,14 +84,6 @@ class AlertaService extends ChangeNotifier {
     final decodedData = json.decode(resp.body);
     print(decodedData);
     alerta.id = decodedData['name'];
-    // return alerta.id!;
-  }
-  Future deleteAlerta(String? id) async {
-    final url = Uri.https(_baseUrl,'alertas/$id.json');
-    final resp = await http.delete(url);
-    final decodedData = json.decode(resp.body);
-    print(decodedData);
-    // alerta.id = decodedData['name'];
     // return alerta.id!;
   }
 

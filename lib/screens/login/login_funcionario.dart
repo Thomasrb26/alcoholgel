@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:alcoholgelutal/screens/login/diseno_funcionario.dart';
+import 'package:flutter_application_1/screens/login/diseno_funcionario.dart';
 
-import 'package:alcoholgelutal/screens/usuario/usuario.dart';
+import 'package:flutter_application_1/screens/usuario/usuario.dart';
 
 class LoginFuncionario extends StatefulWidget {
   static String id = 'login_funcionario';

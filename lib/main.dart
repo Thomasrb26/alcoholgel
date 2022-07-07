@@ -1,9 +1,5 @@
-import 'package:alcoholgelutal/screens/usuario/mis_alertas_screen.dart';
-import 'package:alcoholgelutal/screens/usuario/new_alerta_info.dart';
-import 'package:alcoholgelutal/services/alerta_service.dart';
 import 'package:flutter/material.dart';
-import 'package:alcoholgelutal/import.dart';
-import 'package:alcoholgelutal/services/auth_service.dart';
+import 'package:flutter_application_1/import.dart';
 
 
 void main() {
@@ -17,10 +13,7 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AlertaService()),
-        ChangeNotifierProvider(create: (_) => AuthService())
-        ],
+      providers: [ChangeNotifierProvider(create: (_) => AlertaService())],
       child: const MyApp(),
     );
   }
@@ -40,18 +33,18 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Definir la ruta inicial por defecto
-      initialRoute: 'check_auth',
+      initialRoute: 'login',
 
       // Definir las demas rutas con sus respectivos componentes
       routes: {
         'login': (context) => const LoginPage(),
-        'home_usuario': (context) => const MisAlertasScreen(),
+        'vista_alertas': (context) => const MisAlertasScreen(),
         'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
+        'home':(context) => const MisAlertasScreen(),
         'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
-        'home_funcionario':(context) => const HomeFuncionarioScreen(),
-        'check_auth':(context) => const CheckAuthScreen(),
+        'home_funcionario':(context) => const HomeFuncionarioScreen()
       },
       
       );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:alcoholgelutal/import.dart';
-import 'package:alcoholgelutal/providers/login_form_provider.dart';
-import 'package:alcoholgelutal/screens/login/diseno_usuario.dart';
-import 'package:alcoholgelutal/services/auth_service.dart';
+import 'package:flutter_application_1/import.dart';
+import 'package:flutter_application_1/providers/login_form_provider.dart';
+import 'package:flutter_application_1/screens/login/diseno_usuario.dart';
 
 class LoginUsuario extends StatefulWidget {
   static String id = 'login_usuario';
@@ -44,11 +43,8 @@ class _LoginUsuario extends State<LoginUsuario> {
 }
 
 class _Loginform extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
     final loginForm = Provider.of<LoginFormProvider>(context);
 
     return Form(
@@ -73,41 +69,35 @@ class _Loginform extends StatelessWidget {
             },
           ),
           const SizedBox(height: 30),
-          TextButton(
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
-              // primary: Colors.red[900],
-              backgroundColor: Colors.red[900]
-            ),
-            onPressed: loginForm.isLoading
-              ? null
-              : () async {
-                FocusScope.of(context).unfocus();
-                if (!loginForm.isValidForm()) return;
-                loginForm.isLoading = true;
-                await Future.delayed(const Duration(seconds: 1));
-                loginForm.isLoading = false;
-                await authService.agregarUsuario(loginForm.matricula, 1);
-                authService.idUsuario = loginForm.matricula;
-                Navigator.pushAndRemoveUntil(
-                  context, 
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => const MisAlertasScreen(),
-                  ), 
-                  ModalRoute.withName('/')
-                );
-              },
-          child: Text(
-            loginForm.isLoading ? 'Espere' : 'Ingresar',
-            style: const TextStyle(color: Colors.white),
-          ),
-          ),
-          TextButton(
-            onPressed: (){
-              Navigator.pop(context);
-            }, 
-            child: Text('Atrás', style: TextStyle(color: Colors.grey[600]),)
-          )
+          MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              disabledColor: Colors.grey,
+              elevation: 0,
+              color: Colors.red[900],
+              child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                  child: Text(
+                    loginForm.isLoading ? 'Espere' : 'Ingresar',
+                    style: const TextStyle(color: Colors.white),
+                  )),
+              onPressed: loginForm.isLoading
+                  ? null
+                  : () async {
+                      FocusScope.of(context).unfocus();
+
+                      if (!loginForm.isValidForm()) return;
+
+                      loginForm.isLoading = true;
+
+                      await Future.delayed(const Duration(seconds: 1));
+
+                      // TODO: validar si el login es correcto
+                      loginForm.isLoading = false;
+
+                      Navigator.pushReplacementNamed(
+                          context, 'vista_alertas');
+                    })
         ],
       ),
     );

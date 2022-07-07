@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:alcoholgelutal/import.dart';
-import 'package:alcoholgelutal/models/alerta.dart';
-import 'package:alcoholgelutal/providers/alerta_form_provider.dart';
-import 'package:alcoholgelutal/services/alerta_service.dart';
+import 'package:flutter_application_1/models/alerta.dart';
+import 'package:flutter_application_1/providers/alerta_form_provider.dart';
+import 'package:flutter_application_1/services/alerta_service.dart';
 import 'package:provider/provider.dart';
 
 class AlertaInfoExistenteScreen extends StatelessWidget {
@@ -41,10 +40,9 @@ class _AlertaInfo extends StatelessWidget {
         content: const Text('¿Estás seguro de querer eliminar esta alerta?'),
         actions: [
           TextButton(
-            onPressed: () async{
+            onPressed: (){
               alertaService.alertas.removeWhere((element) => element.id == id  );
-              await alertaService.deleteAlerta(id);
-              Navigator.pushNamedAndRemoveUntil(context, "home_usuario",ModalRoute.withName('/'));
+              Navigator.pushNamed(context, "home");
             },
             child: const Text('Sí')
           ),
@@ -70,7 +68,7 @@ class _AlertaInfo extends StatelessWidget {
       key: alertaForm.formKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('AlcoholGel Utal'),
+        title: const Text('Alcohol Gel App'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -102,11 +100,12 @@ class _AlertaInfo extends StatelessWidget {
                     const Divider(),
                     const SizedBox(height: 20,),
                     ElevatedButton(
-
                       // onPressed:enviarAlertaDb,
                       onPressed: () async {
-                        confirmDelete(context, alerta.id);
-                      },
+                          // await alertaService.crearAlerta(alerta);
+                          confirmDelete(context, alerta.id);
+                          // Navigator.pushNamed(context, 'vista_alertas');
+                      } ,
                       child: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         child: Text(

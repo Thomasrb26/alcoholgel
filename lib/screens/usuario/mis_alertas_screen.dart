@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:alcoholgelutal/import.dart';
-import 'package:alcoholgelutal/models/alerta.dart';
-import 'package:alcoholgelutal/screens/shared/loading_screen.dart';
-import 'package:alcoholgelutal/services/auth_service.dart';
-import 'package:alcoholgelutal/utils/qrscan.dart';
-import 'package:alcoholgelutal/widgets/widgets.dart';
+import 'package:flutter_application_1/screens/shared/loading_screen.dart';
+import 'package:flutter_application_1/utils/qrscan.dart';
+import 'package:flutter_application_1/themes/app_theme.dart';
+import 'package:flutter_application_1/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/services.dart';
@@ -20,25 +18,16 @@ class MisAlertasScreen extends StatelessWidget {
 
     // Variable para guardar la informacion del codigo QR.
     String _barcode = '';
-    // print('idUsuario ' + idUsuario!);
+
     // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
-    final authService = Provider.of<AuthService>(context);
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
-    if(alertaService.isLoading) return const LoadingScreen(header:'AlcoholGel Utal');
+    if(alertaService.isLoading) return const LoadingScreen(header:'Mis Alertas');
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('AlcoholGel Utal'),
-          actions: [IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              authService.logout();
-              Navigator.pushReplacementNamed(context, 'login');
-            },
-
-          ),]
+          title: const Text('Mis alertas'),
         ),
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -57,101 +46,49 @@ class MisAlertasScreen extends StatelessWidget {
           ] 
         ),
         //Lista de alertas para el usuario.
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              // padding: EdgeInsets.all(16.0),
-              padding: const EdgeInsets.only(
-                left: 16,
-                top: 16,
-                bottom: 10,
-              ),
-              child: Text(
-                '¡Bienvenido/a ${authService.idUsuario}!', 
-                style: const TextStyle(
-                  fontSize: 20, 
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  color: AppTheme.primary
-                ),
-              ),
-            ),
-            Divider(),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Tus Alertas', 
-                style: TextStyle(
-                  fontSize: 17, 
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-            ),
-            ListAlertas(alertaService: alertaService, authService: authService,),
-          ],
-        )
+        body: ListAlertas(alertaService: alertaService)
       );
   }
 }
 
 class ListAlertas extends StatelessWidget {
- 
   const ListAlertas({
     Key? key,
-    required this.alertaService, 
-    required this.authService,
+    required this.alertaService,
   }) : super(key: key);
 
   final AlertaService alertaService;
-  final AuthService authService;
 
   @override
   Widget build(BuildContext context) {
-    
-    final List<Alertas> alertasUser = [];
-    
-    for (var alerta in alertaService.alertas) {
-      if(alerta.creadoPor == authService.idUsuario){
-        alertasUser.add(alerta);
-      }
-    }
-    if(alertasUser.isNotEmpty){
+
+    if(alertaService.alertas.isNotEmpty){
       return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount:alertasUser.length,
+        itemCount: alertaService.alertas.length,
         itemBuilder: (context,i) =>  
           GestureDetector(
             onTap: (){
-              alertaService.alertaSeleccionada = alertasUser[i].copia();
+              alertaService.alertaSeleccionada = alertaService.alertas[i].copia();
               Navigator.pushNamed(context, 'alertaExistente');
             },
             child: CardAlertaUsuario(
-              edificio: alertasUser[i].edificio, 
-              fecha: alertasUser[i].fechaCreacion, 
-              estado: alertasUser[i].estado, 
-              sala:alertasUser[i].sala, 
+              edificio: alertaService.alertas[i].edificio, 
+              fecha: alertaService.alertas[i].fechaCreacion, 
+              estado: alertaService.alertas[i].estado, 
+              sala: alertaService.alertas[i].sala, 
             ),
           )
       );
     }
     else{
       return Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.6,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.question_mark_rounded, color: Colors.grey,),
-              Text(
-                "No tienes alertas creadas, para crear una haz click en el botón flotante ubicado en la parte inferior para escanear un código QR.", 
-                style: TextStyle(color: Colors.grey),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.question_mark_rounded, color: Colors.grey,),
+            Text("No existen alertas", style: TextStyle(color: Colors.grey),),
+          ],
         ),
       );
     }
