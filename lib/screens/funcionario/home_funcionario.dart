@@ -72,8 +72,6 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
           cantidad++;
         }
       }
-      print('cantidad');
-      print(cantidad);
       return cantidad;
     }
 
@@ -91,7 +89,7 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
           },
         ),
       ]),
-      bottomNavigationBar: menuNavegacion(),
+      bottomNavigationBar: menuNavegacion( getNuevasAlertas()),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,11 +135,11 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
           ),
           label: 'Nuevas',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.timer_sharp),
           label: 'Aceptadas',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.playlist_add_check),
           label: 'Completadas',
         ),

@@ -27,7 +27,7 @@ class _LoginFuncionario extends State<LoginFuncionario> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 200),
+            const SizedBox(height: 50),
             FractionallySizedBox(
               widthFactor: 0.9,
               child: Cardcontainer(
@@ -67,7 +67,7 @@ class _LoginformFun extends StatelessWidget {
                 prefixIcon: Icons.login_rounded),
             onChanged: (value) => loginForm.matricula = value,
             validator: (value) {
-              String pattern = r'([0-9]{10})';
+              String pattern = r'([0-9]{9})';
               RegExp regExp = new RegExp(pattern);
               return regExp.hasMatch(value ?? '') ? null : 'rut no valido';
             },
