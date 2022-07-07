@@ -1,4 +1,4 @@
-package com.example.flutter_application_1
+package com.gpt2020.alcoholgelutal
 
 import io.flutter.embedding.android.FlutterActivity
 

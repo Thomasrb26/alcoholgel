@@ -23,7 +23,7 @@ class Alertas {
 
   bool activa;
   String comentario;
-  String creadoPor;
+  String? creadoPor;
   String edificio;
   String encargado;
   String estado;

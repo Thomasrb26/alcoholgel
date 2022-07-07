@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/themes/app_theme.dart';
+import 'package:alcoholgelutal/themes/app_theme.dart';
 
 ///Widget que representa un elemento en la lista de alertas existentes del usuario.
 ///Muestra informacion de la alerta, como el titulo, fecha, el estado actual y un par de iconos.

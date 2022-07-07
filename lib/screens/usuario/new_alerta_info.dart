@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/providers/alerta_form_provider.dart';
-import 'package:flutter_application_1/screens/usuario/info_alerta/input_comentario.dart';
-import 'package:flutter_application_1/screens/usuario/info_alerta/select_tipo_data.dart';
-import 'package:flutter_application_1/services/alerta_service.dart';
-import 'package:flutter_application_1/utils/qrscan.dart';
+import 'package:alcoholgelutal/models/alerta.dart';
+import 'package:alcoholgelutal/providers/alerta_form_provider.dart';
+import 'package:alcoholgelutal/screens/usuario/info_alerta/input_comentario.dart';
+import 'package:alcoholgelutal/screens/usuario/info_alerta/select_tipo_data.dart';
+import 'package:alcoholgelutal/services/alerta_service.dart';
+import 'package:alcoholgelutal/services/auth_service.dart';
+import 'package:alcoholgelutal/utils/qrscan.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 /// Vista de informacion de una alerta luego de escanear el codigo QR del dispensador.
@@ -16,19 +18,25 @@ class AlertaInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alertaService = Provider.of<AlertaService>(context);
-
+    final authService = Provider.of<AuthService>(context);
+    final user =  authService.readUserId();
     String getDate() {
       final now = DateTime.now();
       return "${now.day}-${now.month}-${now.year}";
     }
 
     // Creamos mediante el provider una instancia de alerta.
-    return ChangeNotifierProvider(
-        create: (_) => AlertaFormProvider(
-            // Creacion de una instancia de alerta.
-            Alertas(
+    return FutureBuilder(
+      future: authService.readUserId(),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+        if(snapshot.hasData){
+          return ChangeNotifierProvider(
+            create: (_) => AlertaFormProvider(
+              // Creacion de una instancia de alerta.
+              Alertas(
                 activa: true,
-                creadoPor: "user",
+                // creadoPor: "user",
+                creadoPor: snapshot.data,
                 edificio: QrScan.jsonBarCode['edificio'],
                 encargado: '',
                 estado: "Nueva",
@@ -36,9 +44,15 @@ class AlertaInfoScreen extends StatelessWidget {
                 sala: QrScan.jsonBarCode['sala'],
                 comentario: '',
                 tipoAlerta: 'Falta Alcohol')),
-
-        // Luego de crear el provider con la alerta se la enviamos a la vista.
-        child: _AlertaInfo(alertaService: alertaService));
+            // Luego de crear el provider con la alerta se la enviamos a la vista.
+            child: _AlertaInfo(alertaService: alertaService)
+          );
+        }
+        else{
+          return const Text('Espere');
+        }
+      }
+    );
   }
 }
 
@@ -62,7 +76,7 @@ class _AlertaInfo extends StatelessWidget {
       key: alertaForm.formKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Alcohol Gel App'),
+        title: const Text('AlcoholGel Utal'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -144,7 +158,7 @@ class _AlertaInfo extends StatelessWidget {
                       // onPressed:enviarAlertaDb,
                       onPressed: () async {
                         await alertaService.crearAlerta(alerta);
-                        Navigator.pushNamed(context, 'vista_alertas');
+                        Navigator.pushNamedAndRemoveUntil(context, 'home_usuario', ModalRoute.withName('/'));
                       },
                       child: const Padding(
                         padding:

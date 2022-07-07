@@ -1,9 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/screens/funcionario/Card_Alerta_Funcionario.dart';
-import 'package:flutter_application_1/screens/shared/loading_screen.dart';
-import 'package:flutter_application_1/widgets/widgets.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/models/alerta.dart';
+import 'package:alcoholgelutal/screens/funcionario/Card_Alerta_Funcionario.dart';
+import 'package:alcoholgelutal/screens/shared/loading_screen.dart';
+import 'package:alcoholgelutal/widgets/widgets.dart';
 
 class HomeFuncionarioScreen extends StatefulWidget {
   const HomeFuncionarioScreen({Key? key}) : super(key: key);
@@ -29,10 +30,10 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
   Widget build(BuildContext context) {
     // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
-    List<Alertas> listaAlertas = alertaService.alertas;
-    
-    String setEstadoMenu(){
 
+    List<Alertas> listaAlertas = alertaService.alertas;
+
+    String setEstadoMenu() {
       if (_selectedIndex == 0) {
         return 'Nueva';
       } else if (_selectedIndex == 1) {
@@ -41,13 +42,13 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
         return 'Completada';
       }
     }
-    
-    String getTitle(){
+
+    String getTitle() {
       if (_selectedIndex == 0) {
         return 'Alertas Nuevas';
       } else if (_selectedIndex == 1) {
         return 'Alertas Aceptadas';
-      } else{
+      } else {
         return 'Alertas Completadas';
       }
     }
@@ -61,14 +62,27 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
     List<Alertas> listaFilrada = filtrarAlertas();
 
+    int getNuevasAlertas() {
+      int cantidad = 0;
+      for (var i = 0; i < listaAlertas.length; i++) {
+        if (listaAlertas[i].estado == 'Nueva') {
+          cantidad++;
+        }
+      }
+      print('cantidad');
+      print(cantidad);
+      return cantidad;
+    }
+
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
-    if (alertaService.isLoading) return const LoadingScreen(header: 'Mis Alertas');
+    if (alertaService.isLoading)
+      return const LoadingScreen(header: 'Mis Alertas');
 
     return Scaffold(
       appBar: AppBar(
-        title:  const Text('Alcohol Gel UTAL'),
+        title: const Text('Alcohol Gel UTAL'),
       ),
-      bottomNavigationBar: menuNavegacion(),
+      bottomNavigationBar: menuNavegacion(getNuevasAlertas()),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,36 +90,42 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                getTitle(), 
-                style: const TextStyle(
-                  fontSize: 17, 
-                  fontWeight: FontWeight.bold
-                ),
+                getTitle(),
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
             ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: listaFilrada.length,
-              itemBuilder: (context, index) => 
-                CardAlertaFuncionario(
-                  alerta: listaFilrada[index], 
-                  notifyParent: recargarHome, 
-                  ubicacion: _selectedIndex,
-                )
-                // CardAcordeonAlertaScreen()
-            ,),
+              itemBuilder: (context, index) => CardAlertaFuncionario(
+                alerta: listaFilrada[index],
+                notifyParent: recargarHome,
+                ubicacion: _selectedIndex,
+              )
+              // CardAcordeonAlertaScreen()
+              ,
+            ),
           ],
         ),
       ),
     );
   }
 
-  BottomNavigationBar menuNavegacion() {
+  BottomNavigationBar menuNavegacion(int cantidad) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.playlist_add),
+          icon: Badge(
+            showBadge: true,
+            badgeContent:
+                Text('$cantidad', style: const TextStyle(color: Colors.white)),
+            animationType: BadgeAnimationType.scale,
+            shape: BadgeShape.circle,
+            //position: BadgePosition.center(),
+            child: const Icon(Icons.playlist_add),
+          ),
           label: 'Nuevas',
         ),
         BottomNavigationBarItem(

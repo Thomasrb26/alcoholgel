@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/import.dart';
-import 'package:flutter_application_1/models/alerta.dart';
-import 'package:flutter_application_1/screens/funcionario/tabla_info_alerta.dart';
+import 'package:alcoholgelutal/import.dart';
+import 'package:alcoholgelutal/models/alerta.dart';
+import 'package:alcoholgelutal/screens/funcionario/tabla_info_alerta.dart';
 
 ///Widget que representa un elemento en la lista de alertas existentes del usuario.
 ///Muestra informacion de la alerta, como el titulo, fecha, el estado actual y un par de iconos.
