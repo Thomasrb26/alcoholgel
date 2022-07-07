@@ -20,32 +20,29 @@ class _LoginUsuario extends State<LoginUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DisenologinUsuario(
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            FractionallySizedBox(
-              widthFactor: 0.9,
-              child: Cardcontainer(
-                  child: Column(
-                children: [
-                  ChangeNotifierProvider(
-                    create: (_) => LoginFormProvider(),
-                    child: _Loginform(),
-                  )
-                ],
-              )),
-            ),
-          ],
-        ),
-      )
-    );
+        body: DisenologinUsuario(
+      child: Column(
+        children: [
+          const SizedBox(height: 50),
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: Cardcontainer(
+                child: Column(
+              children: [
+                ChangeNotifierProvider(
+                  create: (_) => LoginFormProvider(),
+                  child: _Loginform(),
+                )
+              ],
+            )),
+          ),
+        ],
+      ),
+    ));
   }
 }
 
 class _Loginform extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -65,8 +62,9 @@ class _Loginform extends StatelessWidget {
                 prefixIcon: Icons.login_rounded),
             onChanged: (value) => loginForm.matricula = value,
             validator: (value) {
-              String pattern = r'([0-9]{10})';
+              String pattern = r'([0-9]{0,10})';
               RegExp regExp = new RegExp(pattern);
+
               return regExp.hasMatch(value ?? '')
                   ? null
                   : 'Matricula no valida';
@@ -75,39 +73,40 @@ class _Loginform extends StatelessWidget {
           const SizedBox(height: 30),
           TextButton(
             style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 16.0),
-              // primary: Colors.red[900],
-              backgroundColor: Colors.red[900]
-            ),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0, vertical: 16.0),
+                // primary: Colors.red[900],
+                backgroundColor: Colors.red[900]),
             onPressed: loginForm.isLoading
-              ? null
-              : () async {
-                FocusScope.of(context).unfocus();
-                if (!loginForm.isValidForm()) return;
-                loginForm.isLoading = true;
-                await Future.delayed(const Duration(seconds: 1));
-                loginForm.isLoading = false;
-                await authService.agregarUsuario(loginForm.matricula, 1);
-                authService.idUsuario = loginForm.matricula;
-                Navigator.pushAndRemoveUntil(
-                  context, 
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => const MisAlertasScreen(),
-                  ), 
-                  ModalRoute.withName('/')
-                );
-              },
-          child: Text(
-            loginForm.isLoading ? 'Espere' : 'Ingresar',
-            style: const TextStyle(color: Colors.white),
-          ),
+                ? null
+                : () async {
+                    FocusScope.of(context).unfocus();
+                    if (!loginForm.isValidForm()) return;
+                    loginForm.isLoading = true;
+                    await Future.delayed(const Duration(seconds: 1));
+                    loginForm.isLoading = false;
+                    await authService.agregarUsuario(loginForm.matricula, 1);
+                    authService.idUsuario = loginForm.matricula;
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => const MisAlertasScreen(),
+                        ),
+                        ModalRoute.withName('/'));
+                  },
+            child: Text(
+              loginForm.isLoading ? 'Espere' : 'Ingresar',
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
           TextButton(
-            onPressed: (){
-              Navigator.pop(context);
-            }, 
-            child: Text('Atrás', style: TextStyle(color: Colors.grey[600]),)
-          )
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Atrás',
+                style: TextStyle(color: Colors.grey[600]),
+              ))
         ],
       ),
     );

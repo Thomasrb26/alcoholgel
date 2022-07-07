@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../../providers/alerta_form_provider.dart';
 
 class InputComentario extends StatelessWidget {
-
   final String? hintText;
   final String? helperText;
   final String? labelText;
@@ -13,18 +12,18 @@ class InputComentario extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool isPassword;
   final String formProperty;
-  // final Map<String, String> formValues;
-  
+  //final Map<String, String> formValues;
+
   const InputComentario({
-    Key? key, 
-    this.hintText, 
-    this.labelText, 
-    this.helperText, 
-    this.icon, 
-    this.suffixIcon, 
-    this.keyboardType, 
+    Key? key,
+    this.hintText,
+    this.labelText,
+    this.helperText,
+    this.icon,
+    this.suffixIcon,
+    this.keyboardType,
     this.isPassword = false,
-    required this.formProperty, 
+    required this.formProperty,
     // required this.formValues,
   }) : super(key: key);
 
@@ -40,7 +39,7 @@ class InputComentario extends StatelessWidget {
       initialValue: alerta.comentario,
       textCapitalization: TextCapitalization.words,
       keyboardType: keyboardType,
-      obscureText:isPassword,
+      obscureText: isPassword,
       onChanged: (value) {
         alerta.comentario = value;
         // formValues[formProperty] = value;

@@ -16,7 +16,7 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AlertaService()),
         ChangeNotifierProvider(create: (_) => AuthService())
-        ],
+      ],
       child: const MyApp(),
     );
   }
@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       // Quitar banner de modo debug en previsualizacion de android.
       debugShowCheckedModeBanner: false,
 
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
 
       // Definir la ruta inicial por defecto
-      initialRoute: 'check_auth',
+      initialRoute: 'login',
 
       // Definir las demas rutas con sus respectivos componentes
       routes: {
@@ -45,9 +44,9 @@ class MyApp extends StatelessWidget {
         'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
-        'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
-        'home_funcionario':(context) => const HomeFuncionarioScreen(),
-        'check_auth':(context) => const CheckAuthScreen(),
+        'alertaExistente': (context) => const AlertaInfoExistenteScreen(),
+        'home_funcionario': (context) => const HomeFuncionarioScreen(),
+        'check_auth': (context) => const CheckAuthScreen(),
       },
     );
   }
