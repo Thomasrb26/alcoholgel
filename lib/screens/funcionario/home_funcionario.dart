@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
 import 'package:flutter_application_1/models/alerta.dart';
@@ -31,6 +32,7 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
   Widget build(BuildContext context) {
     // Obtenemos el servicio de alertas desde el context, para utilizar conexion con API.
     final alertaService = Provider.of<AlertaService>(context);
+
     List<Alertas> listaAlertas = alertaService.alertas;
 
     String setEstadoMenu() {
@@ -62,6 +64,19 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
 
     List<Alertas> listaFilrada = filtrarAlertas();
     final authService = Provider.of<AuthService>(context);
+
+    int getNuevasAlertas() {
+      int cantidad = 0;
+      for (var i = 0; i < listaAlertas.length; i++) {
+        if (listaAlertas[i].estado == 'Nueva') {
+          cantidad++;
+        }
+      }
+      print('cantidad');
+      print(cantidad);
+      return cantidad;
+    }
+
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
     if (alertaService.isLoading)
       return const LoadingScreen(header: 'Mis Alertas');
@@ -107,11 +122,19 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     );
   }
 
-  BottomNavigationBar menuNavegacion() {
+  BottomNavigationBar menuNavegacion(int cantidad) {
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.playlist_add),
+          icon: Badge(
+            showBadge: true,
+            badgeContent:
+                Text('$cantidad', style: const TextStyle(color: Colors.white)),
+            animationType: BadgeAnimationType.scale,
+            shape: BadgeShape.circle,
+            //position: BadgePosition.center(),
+            child: const Icon(Icons.playlist_add),
+          ),
           label: 'Nuevas',
         ),
         BottomNavigationBarItem(
