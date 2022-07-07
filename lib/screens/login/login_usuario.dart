@@ -19,26 +19,25 @@ class _LoginUsuario extends State<LoginUsuario> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DisenologinUsuario(
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            FractionallySizedBox(
-              widthFactor: 0.9,
-              child: Cardcontainer(
-                  child: Column(
-                children: [
-                  ChangeNotifierProvider(
-                    create: (_) => LoginFormProvider(),
-                    child: _Loginform(),
-                  )
-                ],
-              )),
-            ),
-          ],
-        ),
-      )
-    );
+        body: DisenologinUsuario(
+      child: Column(
+        children: [
+          const SizedBox(height: 50),
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: Cardcontainer(
+                child: Column(
+              children: [
+                ChangeNotifierProvider(
+                  create: (_) => LoginFormProvider(),
+                  child: _Loginform(),
+                )
+              ],
+            )),
+          ),
+        ],
+      ),
+    ));
   }
 }
 
@@ -61,43 +60,51 @@ class _Loginform extends StatelessWidget {
                 prefixIcon: Icons.login_rounded),
             onChanged: (value) => loginForm.matricula = value,
             validator: (value) {
-              String pattern = r'([0-9]{10})';
+              String pattern = r'([0-9]{0,10})';
               RegExp regExp = new RegExp(pattern);
+
               return regExp.hasMatch(value ?? '')
                   ? null
                   : 'Matricula no valida';
             },
           ),
           const SizedBox(height: 30),
-          MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              disabledColor: Colors.grey,
-              elevation: 0,
-              color: Colors.red[900],
-              child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                  child: Text(
-                    loginForm.isLoading ? 'Espere' : 'Ingresar',
-                    style: const TextStyle(color: Colors.white),
-                  )),
-              onPressed: loginForm.isLoading
-                  ? null
-                  : () async {
-                      FocusScope.of(context).unfocus();
-
-                      if (!loginForm.isValidForm()) return;
-
-                      loginForm.isLoading = true;
-
-                      await Future.delayed(const Duration(seconds: 1));
-
-                      // TODO: validar si el login es correcto
-                      loginForm.isLoading = false;
-
-                      Navigator.pushReplacementNamed(
-                          context, 'vista_alertas');
-                    })
+          TextButton(
+            style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0, vertical: 16.0),
+                // primary: Colors.red[900],
+                backgroundColor: Colors.red[900]),
+            onPressed: loginForm.isLoading
+                ? null
+                : () async {
+                    FocusScope.of(context).unfocus();
+                    if (!loginForm.isValidForm()) return;
+                    loginForm.isLoading = true;
+                    await Future.delayed(const Duration(seconds: 1));
+                    loginForm.isLoading = false;
+                    await authService.agregarUsuario(loginForm.matricula, 1);
+                    authService.idUsuario = loginForm.matricula;
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => const MisAlertasScreen(),
+                        ),
+                        ModalRoute.withName('/'));
+                  },
+            child: Text(
+              loginForm.isLoading ? 'Espere' : 'Ingresar',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Atrás',
+                style: TextStyle(color: Colors.grey[600]),
+              ))
         ],
       ),
     );

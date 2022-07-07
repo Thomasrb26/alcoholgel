@@ -18,14 +18,26 @@ class Disenologin extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const[
-                Image(image: AssetImage('images/logoutal.png',), height: 70,),
-                Image(image: AssetImage('images/logoingenieria.png'),height: 70,),
+              children: const [
+                Image(
+                  image: AssetImage(
+                    'images/logoutal.png',
+                  ),
+                  height: 70,
+                ),
+                Image(
+                  image: AssetImage('images/logoingenieria.png'),
+                  height: 70,
+                ),
               ],
             ),
-            const SizedBox(height: 30,),
-            const Text('Seleccione su perfil:', style: TextStyle(fontSize: 18  )),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 30,
+            ),
+            const Text('Seleccione su perfil:', style: TextStyle(fontSize: 18)),
+            const SizedBox(
+              height: 20,
+            ),
             _botonFuncionario(),
             const SizedBox(height: 20),
             _botonEstudiante()
@@ -73,8 +85,8 @@ Widget _botonFuncionario() {
         ),
         elevation: 20,
         onPressed: () {
-          // Navigator.pushNamed(context, 'loginFun');
-          Navigator.pushNamed(context, 'home_funcionario');
+          Navigator.pushNamed(context, 'loginFun');
+          //Navigator.pushNamed(context, 'home_funcionario');
         });
   });
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/import.dart';
 
-
 void main() {
   runApp(const AppState());
 }
@@ -13,7 +12,10 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AlertaService())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AlertaService()),
+        ChangeNotifierProvider(create: (_) => AuthService())
+      ],
       child: const MyApp(),
     );
   }
@@ -25,7 +27,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       // Quitar banner de modo debug en previsualizacion de android.
       debugShowCheckedModeBanner: false,
 
@@ -42,11 +43,10 @@ class MyApp extends StatelessWidget {
         'alertaInfo': (context) => const AlertaInfoScreen(),
         'loginUsuario': ((context) => const LoginUsuario()),
         'loginFun': ((context) => const LoginFuncionario()),
-        'home':(context) => const MisAlertasScreen(),
-        'alertaExistente':(context) => const AlertaInfoExistenteScreen(),
-        'home_funcionario':(context) => const HomeFuncionarioScreen()
+        'alertaExistente': (context) => const AlertaInfoExistenteScreen(),
+        'home_funcionario': (context) => const HomeFuncionarioScreen(),
+        'check_auth': (context) => const CheckAuthScreen(),
       },
-      
-      );
+    );
   }
 }

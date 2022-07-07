@@ -5,6 +5,8 @@ import 'package:flutter_application_1/screens/funcionario/Card_Alerta_Funcionari
 import 'package:flutter_application_1/screens/shared/loading_screen.dart';
 import 'package:flutter_application_1/widgets/widgets.dart';
 
+import '../../services/auth_service.dart';
+
 class HomeFuncionarioScreen extends StatefulWidget {
   const HomeFuncionarioScreen({Key? key}) : super(key: key);
 
@@ -60,15 +62,32 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
     }
 
     List<Alertas> listaFilrada = filtrarAlertas();
+    final authService = Provider.of<AuthService>(context);
+
+    int getNuevasAlertas() {
+      int cantidad = 0;
+      for (var i = 0; i < listaAlertas.length; i++) {
+        if (listaAlertas[i].estado == 'Nueva') {
+          cantidad++;
+        }
+      }
+      return cantidad;
+    }
 
     // Si alertaService esta cargando los elementos, mosrtramos una vista de Loading.
     if (alertaService.isLoading) return const LoadingScreen(header: 'Mis Alertas');
 
     return Scaffold(
-      appBar: AppBar(
-        title:  const Text('Alcohol Gel UTAL'),
-      ),
-      bottomNavigationBar: menuNavegacion(),
+      appBar: AppBar(title: const Text('Alcohol Gel UTAL'), actions: [
+        IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () {
+            authService.logout();
+            Navigator.pushReplacementNamed(context, 'login');
+          },
+        ),
+      ]),
+      bottomNavigationBar: menuNavegacion( getNuevasAlertas()),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,11 +127,11 @@ class _HomeFuncionarioScreenState extends State<HomeFuncionarioScreen> {
           icon: Icon(Icons.playlist_add),
           label: 'Nuevas',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.timer_sharp),
           label: 'Aceptadas',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.playlist_add_check),
           label: 'Completadas',
         ),

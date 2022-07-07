@@ -12,29 +12,33 @@ class DisenologinFuncionario extends StatelessWidget {
       color: const Color.fromARGB(255, 238, 238, 240),
       width: double.infinity,
       height: double.infinity,
-      child: Stack(
-        children: [
-          const Positioned(
-              child: Image(
-                image: AssetImage('images/logoutal.png'),
-                height: 200,
-              ),
-              top: 120,
-              left: 100),
-          const Positioned(
-              child: Image(
-                image: AssetImage('images/logoingenieria.png'),
-                height: 100,
-              ),
-              top: 350,
-              left: 50),
-          child,
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Image(
+                    image: AssetImage(
+                      'images/logoutal.png',
+                    ),
+                    height: 70),
+                Image(
+                  image: AssetImage('images/logoingenieria.png'),
+                  height: 70,
+                ),
+              ],
+            ),
+            child
+          ],
+        ),
       ),
     );
   }
 }
-
+/*
 Widget solicitarRut() {
   return StreamBuilder(builder: (BuildContext context, AsyncSnapshot snapshot) {
     return Container(
@@ -50,3 +54,4 @@ Widget solicitarRut() {
     );
   });
 }
+*/
